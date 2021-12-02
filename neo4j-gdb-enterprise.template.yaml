@@ -1,0 +1,215 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Neo4j Graph Database
+Parameters:
+
+  Version:
+    Description: Version
+    Type: String
+    Default: '436'
+    AllowedValues:
+      - '436'
+      - '432'
+
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: r4.xlarge
+    AllowedValues:
+      - r4.large
+      - r4.xlarge
+      - r4.2xlarge
+      - r4.4xlarge
+      - r4.8xlarge
+      - r4.16xlarge
+
+  NodeCount:
+    Description: Number of core nodes
+    Type: Number
+    Default: 3
+    MinValue: 3
+    MaxValue: 7
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    NoEcho: true
+    MinLength: 8
+    MaxLength: 40
+    AllowedPattern: "^[a-zA-Z0-9\\.-]+$"
+
+  KeyName:
+    Description: Name of an existing EC2 KeyPair
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  DiskSize:
+    Description: Size in GB of the EBS volume on each node
+    Type: Number
+    Default: 100
+
+Mappings:
+  Neo4jGraphDatabase:
+    ap-northeast-1:
+      '436': ami-06aff02312949c238
+      '432': ami-0830e34954c668050
+    ap-northeast-2: 
+      '436': ami-077a4e930f2893cd7
+      '432': ami-0e94884f2ab99ed88
+    ap-south-1:
+      '436': ami-07021df107847b1e1
+      '432': ami-0bbd623dc287552ff
+    ap-southeast-1:
+      '436': ami-05b29567470e41dc6
+      '432': ami-0d9c9acd806f46c06
+    ap-southeast-2:
+      '436': ami-040a9b72d618df3b1
+      '432': ami-04bb726bb46fcb3ee
+    eu-central-1:
+      '436': ami-081b935e88fbe6bc8
+      '432': ami-012851857c4143890
+    eu-west-1:
+      '436': ami-0309dadd09e698831
+      '432': ami-04073ee4c923a9027
+    eu-west-3:
+      '436': ami-0bd85f55cb9fc3a3f
+      '432': ami-05624b83cc3b114bd
+    us-east-1:
+      '436': ami-07f845b374a3e071b
+      '432': ami-094a54de2f205fbd4
+    us-east-2:
+      '436': ami-02ee699da2378a9ea
+      '432': ami-08c25fffb58eeef7c
+    us-west-1:
+      '436': ami-0166b7496efb24c0b
+      '432': ami-0d83e95dd13832827
+    us-west-2:
+      '436': ami-02a6c168bdb39ce36
+      '432': ami-07a3d801c7bdce427
+    eu-south-1:
+      '436': ami-03288b92167749d8a
+      '432': ami-0167bbbfe716ff7cf
+    af-south-1:
+      '436': ami-0eccadbfdd5aa51ad
+      '432': ami-0ae0e115debdf7a53
+    ca-central-1:
+      '436': ami-0342caa0af44a5077
+      '432': ami-0c2de40887340dba2
+    eu-west-2:
+      '436': ami-0d30909f35428f407
+      '432': ami-0ccb7de86d09ddefa
+    eu-north-1:
+      '436': ami-0e0e6962efa754c4f
+      '432': ami-0c76bc9a4e6775179
+    sa-east-1:
+      '436': ami-0b6a9d9d1c8889ccf
+      '432': ami-0be95766106fa5bc5
+    ap-east-1:
+      '436': ami-075a79f40143a0465
+      '432': ami-0c05ee88f16f02ae6
+    us-gov-east-1:
+      '436': ami-0eb44f2114f367b61
+      '432': ami-06ee1884a05be3407
+    us-gov-west-1:
+      '436': ami-0ffcaf6cd87725566
+      '432': ami-09232360d2b661bc9
+
+Resources:
+
+  Neo4jAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AvailabilityZones:
+        Fn::GetAZs: ''
+      LaunchConfigurationName:
+        Ref: Neo4jLaunchConfiguration
+      MinSize: 1
+      MaxSize: 7
+      DesiredCapacity:
+        Ref: NodeCount
+
+  Neo4jLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId:
+        Fn::FindInMap:
+        - Neo4jGraphDatabase
+        - Ref: AWS::Region
+        - Ref: Version
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroups:
+      - Ref: Neo4jSecurityGroup
+      KeyName:
+        Ref: KeyName
+      EbsOptimized: true
+      IamInstanceProfile:
+        Ref: Neo4jInstanceProfile
+      BlockDeviceMappings:
+      - DeviceName: "/dev/xvda"
+        Ebs:
+          DeleteOnTermination: true
+      - DeviceName: "/dev/sdk"
+        Ebs:
+          VolumeSize:
+            Ref: DiskSize
+          VolumeType: gp2
+          Encrypted: true
+      UserData:
+        Fn::Base64:
+          !Join
+          - ''
+          - - '#!/bin/bash\n'
+            - 'echo ''Running startup script...'  
+            - Password=
+            - Ref: Password
+
+  Neo4jInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+      - Ref: Neo4jRole
+  Neo4jRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName: Neo4jPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - ec2:CreateTags
+            - ec2:DescribeTags
+            - ec2:DescribeInstances
+            - autoscaling:DescribeAutoScalingGroups
+            - autoscaling:DescribeAutoScalingInstances
+            - cloudformation:ListStackInstances
+            - cloudformation:DescribeStack*
+            - cloudformation:ListStackResources
+            Resource: "*"
+  Neo4jSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH and Neo4j Ports
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+
+Outputs:
+  Note:
+    Value:
+      !Join
+      - ''
+      - - Your cluster is deployed, and currently forming.
+        - Now is a good time to get a cup of coffee, the
+        - URL below should be available within a few minutes
