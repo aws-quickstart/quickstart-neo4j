@@ -105,7 +105,7 @@ Resources:
             - '# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/'
             - rpm --import https://debian.neo4j.com/neotechnology.gpg.key
 
-            - '# add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:
+            - '# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:'
             - 'cat <<EOF>  /etc/yum.repos.d/neo4j.repo'
             - '[neo4j]'
             - 'name=Neo4j Yum Repo'
