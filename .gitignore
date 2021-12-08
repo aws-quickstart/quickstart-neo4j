@@ -1,5 +1,4 @@
-ci/taskcat_project_override.json
-ci/taskcat-dev*
+taskcat_outputs
 .DS_Store
-venv/
-.idea/
+.taskcat_overrides.yml
+.vscode
