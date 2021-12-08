@@ -14,8 +14,9 @@ Parameters:
   InstanceType:
     Description: EC2 instance type
     Type: String
-    Default: r4.xlarge
+    Default: t3.medium
     AllowedValues:
+      - t3.medium
       - r4.large
       - r4.xlarge
       - r4.2xlarge
@@ -27,7 +28,7 @@ Parameters:
     Description: Number of core nodes
     Type: Number
     Default: 3
-    MinValue: 3
+    MinValue: 1
     MaxValue: 7
 
   Password:
@@ -98,9 +99,28 @@ Resources:
           !Join
           - ''
           - - '#!/bin/bash\n'
-            - 'echo ''Running startup script...'  
-            - Password=
+            - 'echo Running startup script...'  
+            - version=
+            - Ref: Version
+            - password=
             - Ref: Password
+
+            - '# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/'
+            - rpm --import https://debian.neo4j.com/neotechnology.gpg.key
+
+            - '# add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:
+            - 'cat <<EOF>  /etc/yum.repos.d/neo4j.repo'
+            - '[neo4j]'
+            - 'name=Neo4j Yum Repo'
+            - 'baseurl=http://yum.neo4j.com/stable'
+            - 'enabled=1'
+            - 'gpgcheck=1'
+            - 'EOF'
+
+            - '# Install Neo4j'
+            - 'export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes'
+            - 'yum -y install neo4j-enterprise-$version'
+
 
   Neo4jInstanceProfile:
     Type: AWS::IAM::InstanceProfile
