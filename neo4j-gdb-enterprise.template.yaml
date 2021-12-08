@@ -8,8 +8,7 @@ Parameters:
     Default: '4.4.0'
     AllowedValues:
       - '4.4.0'
-      - '4.3.6'
-      - '4.3.2'
+      - '4.3.7'
 
   InstanceType:
     Description: EC2 instance type
@@ -95,34 +94,33 @@ Resources:
         Fn::Base64:
           !Join
           - ''
-          - - '#!/bin/bash\n'
-            - 'echo Running startup script...'  
-            - version=
+          - - "#!/bin/bash \n"
+            - "echo Running startup script... \n"
+
+            - "version="
             - Ref: Version
-            - password=
+            - " \n"
+            - "password="
             - Ref: Password
+            - " \n"
 
-            - '# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/'
-            - rpm --import https://debian.neo4j.com/neotechnology.gpg.key
+            - "# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/ \n"
+            - "rpm --import https://debian.neo4j.com/neotechnology.gpg.key \n"
+            - "# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:  \n"
+            - "echo \""
+            - "[neo4j]  \n"
+            - "name=Neo4j Yum Repo  \n"
+            - "baseurl=http://yum.neo4j.com/stable  \n"
+            - "enabled=1  \n"
+            - "gpgcheck=1  \" > /etc/yum.repos.d/neo4j.repo \n"
 
-            - '# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:'
-            - 'cat <<EOF>  /etc/yum.repos.d/neo4j.repo'
-            - '[neo4j]'
-            - 'name=Neo4j Yum Repo'
-            - 'baseurl=http://yum.neo4j.com/stable'
-            - 'enabled=1'
-            - 'gpgcheck=1'
-            - 'EOF'
+            - "# Install Neo4j  \n"
+            - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes  \n"
+            - "yum -y install neo4j-enterprise-$version  \n"
 
-            - '# Install Neo4j'
-            - 'export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes'
-            - 'yum -y install neo4j-enterprise-$version'
-
-            - '# To Do - Should probably increase ulimit'
-
-            - 'service neo4j start'
-            - 'neo4j-admin set-initial-password $password'
-
+            - "# To Do - Should probably increase ulimit  \n"
+            - "service neo4j start  \n"
+            - "neo4j-admin set-initial-password $password  \n"
 
   Neo4jInstanceProfile:
     Type: AWS::IAM::InstanceProfile
