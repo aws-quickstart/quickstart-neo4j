@@ -119,8 +119,11 @@ Resources:
             - "yum -y install neo4j-enterprise-$version  \n"
 
             - "# To Do - Should probably increase ulimit  \n"
+            - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf \n"
+
             - "service neo4j start  \n"
             - "neo4j-admin set-initial-password $password  \n"
+
 
   Neo4jInstanceProfile:
     Type: AWS::IAM::InstanceProfile
