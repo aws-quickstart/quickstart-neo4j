@@ -1,5 +1,4 @@
-
-## quickstart-neo4j-graph-database—Quick Start
+# quickstart-neo4j-graph-database
 
 For architectural details, step-by-step instructions, and customization options, see the [deployment guide](https://aws-quickstart.github.io/quickstart-neo4j-graph-database/).
 

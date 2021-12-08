@@ -1,0 +1,185 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Neo4j Graph Database
+Parameters:
+
+  Version:
+    Description: Version
+    Type: String
+    Default: '4.4.0'
+    AllowedValues:
+      - '4.4.0'
+      - '4.3.6'
+      - '4.3.2'
+
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t3.medium
+    AllowedValues:
+      - t3.medium
+      - r4.large
+      - r4.xlarge
+      - r4.2xlarge
+      - r4.4xlarge
+      - r4.8xlarge
+      - r4.16xlarge
+
+  NodeCount:
+    Description: Number of core nodes
+    Type: Number
+    Default: 3
+    MinValue: 1
+    MaxValue: 7
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    NoEcho: true
+
+  KeyName:
+    Description: Name of an existing EC2 KeyPair
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  DiskSize:
+    Description: Size in GB of the EBS volume on each node
+    Type: Number
+    Default: 100
+
+Mappings:
+  Neo4jGraphDatabase:
+    us-east-1: 
+      byol: ami-0ed9277fb7eb570c9
+
+Resources:
+
+  Neo4jAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AvailabilityZones:
+        Fn::GetAZs: ''
+      LaunchConfigurationName:
+        Ref: Neo4jLaunchConfiguration
+      MinSize: 1
+      MaxSize: 7
+      DesiredCapacity:
+        Ref: NodeCount
+
+  Neo4jLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId:
+        Fn::FindInMap:
+        - Neo4jGraphDatabase
+        - Ref: AWS::Region
+        - byol
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroups:
+      - Ref: Neo4jSecurityGroup
+      KeyName:
+        Ref: KeyName
+      EbsOptimized: true
+      IamInstanceProfile:
+        Ref: Neo4jInstanceProfile
+      BlockDeviceMappings:
+      - DeviceName: "/dev/xvda"
+        Ebs:
+          DeleteOnTermination: true
+      - DeviceName: "/dev/sdk"
+        Ebs:
+          VolumeSize:
+            Ref: DiskSize
+          VolumeType: gp3
+          Encrypted: true
+      UserData:
+        Fn::Base64:
+          !Join
+          - ''
+          - - '#!/bin/bash\n'
+            - 'echo Running startup script...'  
+            - version=
+            - Ref: Version
+            - password=
+            - Ref: Password
+
+            - '# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/'
+            - rpm --import https://debian.neo4j.com/neotechnology.gpg.key
+
+            - '# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:'
+            - 'cat <<EOF>  /etc/yum.repos.d/neo4j.repo'
+            - '[neo4j]'
+            - 'name=Neo4j Yum Repo'
+            - 'baseurl=http://yum.neo4j.com/stable'
+            - 'enabled=1'
+            - 'gpgcheck=1'
+            - 'EOF'
+
+            - '# Install Neo4j'
+            - 'export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes'
+            - 'yum -y install neo4j-enterprise-$version'
+
+            - '# To Do - Should probably increase ulimit'
+
+            - 'service neo4j start'
+            - 'neo4j-admin set-initial-password $password'
+
+
+  Neo4jInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+      - Ref: Neo4jRole
+  Neo4jRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName: Neo4jPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - ec2:CreateTags
+            - ec2:DescribeTags
+            - ec2:DescribeInstances
+            - autoscaling:DescribeAutoScalingGroups
+            - autoscaling:DescribeAutoScalingInstances
+            - cloudformation:ListStackInstances
+            - cloudformation:DescribeStack*
+            - cloudformation:ListStackResources
+            Resource: "*"
+  Neo4jSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH and Neo4j Ports
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7474
+        ToPort: 7474
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7687
+        ToPort: 7687
+        CidrIp: 0.0.0.0/0
+
+Outputs:
+  Note:
+    Value:
+      !Join
+      - ''
+      - - Your cluster is deployed, and currently forming.
+        - Now is a good time to get a cup of coffee, the
+        - URL below should be available within a few minutes
