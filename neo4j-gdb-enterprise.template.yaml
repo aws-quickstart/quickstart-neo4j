@@ -236,6 +236,6 @@ Outputs:
     Value:
       !Join
       - ''
-      - - Your cluster is deployed, and currently forming.
-        - Now is a good time to get a cup of coffee, the
-        - URL below should be available within a few minutes
+      - - "Your cluster is deployed, and currently forming. \n"
+        - "Now is a good time to get a cup of coffee, the \n"
+        - "URL below should be available within a few minutes \n"
