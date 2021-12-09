@@ -83,9 +83,6 @@ Resources:
       BlockDeviceMappings:
       - DeviceName: "/dev/xvda"
         Ebs:
-          DeleteOnTermination: true
-      - DeviceName: "/dev/sdk"
-        Ebs:
           VolumeSize:
             Ref: DiskSize
           VolumeType: gp3
@@ -106,23 +103,38 @@ Resources:
 
             - "# Following install instructions here: https://neo4j.com/docs/operations-manual/current/installation/linux/tarball/ \n"
             - "rpm --import https://debian.neo4j.com/neotechnology.gpg.key \n"
-            - "# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo:  \n"
+            - "# Add the Neo4j yum repo to /etc/yum.repos.d/neo4j.repo: \n"
             - "echo \""
-            - "[neo4j]  \n"
-            - "name=Neo4j Yum Repo  \n"
-            - "baseurl=http://yum.neo4j.com/stable  \n"
-            - "enabled=1  \n"
-            - "gpgcheck=1  \" > /etc/yum.repos.d/neo4j.repo \n"
+            - "[neo4j] \n"
+            - "name=Neo4j Yum Repo \n"
+            - "baseurl=http://yum.neo4j.com/stable \n"
+            - "enabled=1 \n"
+            - "gpgcheck=1 \" > /etc/yum.repos.d/neo4j.repo \n"
 
-            - "# Install Neo4j  \n"
-            - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes  \n"
-            - "yum -y install neo4j-enterprise-$version  \n"
+            - "# Install Neo4j \n"
+            - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \n"
+            - "yum -y install neo4j-enterprise-${version} \n"
 
-            - "# To Do - Should probably increase ulimit  \n"
+            - "# To Do - Increase ulimit \n"
+            - "# To Do - Set JVM heap size \n"
+    
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf \n"
 
-            - "service neo4j start  \n"
-            - "neo4j-admin set-initial-password $password  \n"
+            - "publicHostname=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) \n"
+            - "sed -i s/#dbms.default_advertised_address=localhost/dbms.default_advertised_address=${publicHostname}/g /etc/neo4j/neo4j.conf \n"
+
+            - "region=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/.$//') \n"
+            - "instanceId=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) \n"
+            - "stackName=$(aws cloudformation describe-stack-resources --physical-resource-id $instanceId --query 'StackResources[0].StackName' --output text --region $region) \n"
+            - "coreMembers=$(aws autoscaling describe-auto-scaling-instances --region $region --output text --query \"AutoScalingInstances[?AutoScalingGroupName=='Neo4jAutoScalingGroup'].InstanceId\" | xargs -n1 aws ec2 describe-instances --instance-ids $ID --region $region --query \"Reservations[].Instances[].PublicDnsName\" --output text --filter \"Name=tag:aws:cloudformation:stack-name,Values=$stackName\") \n"
+            - "coreMembers=$(echo $coreMembers | sed 's/ /:5000,/g') \n"
+            - "coreMembers=$(echo $coreMembers):5000 \n"
+            - "sed -i s/#causal_clustering.initial_discovery_members=localhost:5000,localhost:5001,localhost:5002/causal_clustering.initial_discovery_members=${coreMembers}/g /etc/neo4j/neo4j.conf \n"
+
+            - "sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf \n"
+
+            - "service neo4j start \n"
+            - "neo4j-admin set-initial-password ${password} \n"
 
 
   Neo4jInstanceProfile:
@@ -168,12 +180,52 @@ Resources:
         ToPort: 22
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
+        FromPort: 6362
+        ToPort: 6362
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
         FromPort: 7474
         ToPort: 7474
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
+        FromPort: 7473
+        ToPort: 7473
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
         FromPort: 7687
         ToPort: 7687
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 5000
+        ToPort: 5000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 6000
+        ToPort: 6000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7000
+        ToPort: 7000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7688
+        ToPort: 7688
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 2003
+        ToPort: 2003
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 2004
+        ToPort: 2004
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 3637
+        ToPort: 3637
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 5005
+        ToPort: 5005
         CidrIp: 0.0.0.0/0
 
 Outputs:
@@ -181,6 +233,7 @@ Outputs:
     Value:
       !Join
       - ''
-      - - Your cluster is deployed, and currently forming.
-        - Now is a good time to get a cup of coffee, the
-        - URL below should be available within a few minutes
+      - - "Your cluster is deployed, and currently forming. \n"
+        - "Now is a good time to get a cup of coffee, the \n"
+        - "URL below should be available within a few minutes \n"
+
