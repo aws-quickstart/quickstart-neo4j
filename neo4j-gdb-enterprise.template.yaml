@@ -83,9 +83,6 @@ Resources:
       BlockDeviceMappings:
       - DeviceName: "/dev/xvda"
         Ebs:
-          DeleteOnTermination: true
-      - DeviceName: "/dev/sdk"
-        Ebs:
           VolumeSize:
             Ref: DiskSize
           VolumeType: gp3
