@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
+Description: Neo4j Graph Database
 Parameters:
 
   Version:
@@ -44,10 +44,9 @@ Parameters:
     Type: Number
     Default: 100
 
-Mappings:
-  Neo4jGraphDatabase:
-    us-east-1: 
-      byol: ami-0ed9277fb7eb570c9
+  AMIID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
 Resources:
 
@@ -66,11 +65,7 @@ Resources:
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId:
-        Fn::FindInMap:
-        - Neo4jGraphDatabase
-        - Ref: AWS::Region
-        - byol
+      ImageId: !Ref 'AMIID'
       InstanceType:
         Ref: InstanceType
       SecurityGroups:
@@ -136,7 +131,6 @@ Resources:
             - "service neo4j start \n"
             - "neo4j-admin set-initial-password ${password} \n"
 
-
   Neo4jInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
@@ -161,14 +155,9 @@ Resources:
           Statement:
           - Effect: Allow
             Action:
-            - ec2:CreateTags
-            - ec2:DescribeTags
-            - ec2:DescribeInstances
-            - autoscaling:DescribeAutoScalingGroups
-            - autoscaling:DescribeAutoScalingInstances
-            - cloudformation:ListStackInstances
             - cloudformation:DescribeStack*
-            - cloudformation:ListStackResources
+            - autoscaling:DescribeAutoScalingInstances
+            - ec2:DescribeInstances
             Resource: "*"
   Neo4jSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -236,4 +225,3 @@ Outputs:
       - - "Your cluster is deployed, and currently forming. \n"
         - "Now is a good time to get a cup of coffee, the \n"
         - "URL below should be available within a few minutes \n"
-
