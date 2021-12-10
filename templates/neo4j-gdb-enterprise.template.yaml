@@ -26,7 +26,7 @@ Parameters:
   NodeCount:
     Description: Number of core nodes
     Type: Number
-    Default: 3
+    Default: 1
     MinValue: 1
     MaxValue: 7
 
@@ -216,12 +216,3 @@ Resources:
         FromPort: 5005
         ToPort: 5005
         CidrIp: 0.0.0.0/0
-
-Outputs:
-  Note:
-    Value:
-      !Join
-      - ''
-      - - "Your cluster is deployed, and currently forming. \n"
-        - "Now is a good time to get a cup of coffee, the \n"
-        - "URL below should be available within a few minutes \n"
