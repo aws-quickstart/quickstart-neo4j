@@ -6,3 +6,4 @@ taskcat_outputs
 delete.sh
 deploy.sh
 validate.sh
+scratch.sh

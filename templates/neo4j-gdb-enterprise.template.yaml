@@ -113,7 +113,12 @@ Resources:
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \n"
             - "yum -y install neo4j-enterprise-${version} \n"
 
-            - "# To Do - Increase ulimit \n"
+            - "# Increase ulimit \n"
+            - "echo \" \n"
+            - "# <domain> <type> <item>  <value> \n"
+            - "    *       soft  nofile  60000 \n"
+            - "    *       hard  nofile  60000\" >> /etc/security/limits.conf \n"
+
             - "# To Do - Set JVM heap size \n"
     
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf \n"
