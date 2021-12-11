@@ -39,7 +39,6 @@ Parameters:
       - 1
       - 3
       - 5
-      - 7
 
   Password:
     Description: Password for Neo4j
@@ -69,7 +68,7 @@ Resources:
       LaunchConfigurationName:
         Ref: Neo4jLaunchConfiguration
       MinSize: 1
-      MaxSize: 7
+      MaxSize: 5
       DesiredCapacity:
         Ref: NodeCount
 
