@@ -1,3 +1,5 @@
+# create a file called .taskcat_overrides.yml and use that to store sensitive parameters like password  or api keys of taskcat testing. 
+# .taskcat_overrides.yml file is ignored in .gitignore file, so it won't be checked-in.
 project:
   name: quickstart-examples
   owner: quickstart-eng@amazon.com
