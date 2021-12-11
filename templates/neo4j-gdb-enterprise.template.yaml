@@ -100,10 +100,21 @@ Resources:
           - - "#!/bin/bash\n"
             - "echo Running startup script...\n"
 
-            - "edition=" Ref: Edition "\n"
-            - "version=" Ref: Version "\n"
-            - "nodeCount=" Ref: NodeCount "\n"
-            - "password=" Ref: Password "\n"
+            - "edition="
+            - Ref: Edition
+            - "\n"
+
+            - "version="
+            - Ref: Version
+            - "\n"
+
+            - "nodeCount="
+            - Ref: NodeCount
+            - "\n"
+
+            - "password="
+            - Ref: Password
+            - "\n"
 
             - "echo Adding neo4j yum repo...\n"
             - "rpm --import https://debian.neo4j.com/neotechnology.gpg.key\n"
