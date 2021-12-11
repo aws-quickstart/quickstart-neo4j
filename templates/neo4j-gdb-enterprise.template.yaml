@@ -68,6 +68,8 @@ Resources:
         Fn::GetAZs: ''
       LaunchConfigurationName:
         Ref: Neo4jLaunchConfiguration
+      MinSize: 1
+      MaxSize: 7
       DesiredCapacity:
         Ref: NodeCount
 
