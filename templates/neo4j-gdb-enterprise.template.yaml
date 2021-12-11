@@ -34,7 +34,7 @@ Parameters:
   NodeCount:
     Description: Number of core nodes
     Type: Number
-    Default: 3
+    Default: 1
     AllowedValues:
       - 1
       - 3
@@ -68,8 +68,6 @@ Resources:
         Fn::GetAZs: ''
       LaunchConfigurationName:
         Ref: Neo4jLaunchConfiguration
-      MinSize: 1
-      MaxSize: 7
       DesiredCapacity:
         Ref: NodeCount
 
@@ -133,9 +131,9 @@ Resources:
 
             - "if nodeCount==1 \n"
             - "then \n"
-            - "  echo "Running on a singe node."
+            - "  echo Running on a singe node."
             - "else \n"
-            - "  echo "Running on multiple nodes.  Configuring membership in neo4j.conf..."
+            - "  echo Running on multiple nodes.  Configuring membership in neo4j.conf..."
             - "  region=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/.$//') \n"
             - "  instanceId=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) \n"
             - "  stackName=$(aws cloudformation describe-stack-resources --physical-resource-id $instanceId --query 'StackResources[0].StackName' --output text --region $region) \n"
