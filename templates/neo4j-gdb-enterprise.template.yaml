@@ -3,6 +3,14 @@ Description: Neo4j Graph Database
 Parameters:
 
   Version:
+    Description: Edition
+    Type: String
+    Default: 'enterprise'
+    AllowedValues:
+      - 'enterprise'
+      - 'community'
+
+  Version:
     Description: Version
     Type: String
     Default: '4.4.0'
@@ -92,6 +100,9 @@ Resources:
           - - "#!/bin/bash \n"
             - "echo Running startup script... \n"
 
+            - "edition="
+            - Ref: Edition
+            - " \n"
             - "version="
             - Ref: Version
             - " \n"
@@ -112,12 +123,6 @@ Resources:
             - "# Install Neo4j \n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \n"
             - "yum -y install neo4j-enterprise-${version} \n"
-
-            - "# Increase ulimit \n"
-            - "echo \" \n"
-            - "# <domain> <type> <item>  <value> \n"
-            - "    *       soft  nofile  60000 \n"
-            - "    *       hard  nofile  60000\" >> /etc/security/limits.conf \n"
 
             - "# To Do - Set JVM heap size \n"
     
