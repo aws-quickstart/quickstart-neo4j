@@ -122,7 +122,7 @@ Resources:
 
             - "# Install Neo4j \n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \n"
-            - "yum -y install neo4j-enterprise-${version} \n"
+            - "yum -y install neo4j-${edition}-${version} \n"
 
             - "# To Do - Set JVM heap size \n"
     
