@@ -27,8 +27,11 @@ Parameters:
     Description: Number of core nodes
     Type: Number
     Default: 3
-    MinValue: 1
-    MaxValue: 7
+    AllowedValues:
+      - 1
+      - 3
+      - 5
+      - 7
 
   Password:
     Description: Password for Neo4j
