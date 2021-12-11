@@ -131,8 +131,7 @@ Resources:
             - "publicHostname=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) \n"
             - "sed -i s/#dbms.default_advertised_address=localhost/dbms.default_advertised_address=${publicHostname}/g /etc/neo4j/neo4j.conf \n"
 
-            - "if nodeCount==1 \n"
-            - "then \n"
+            - "if [[ \"$nodeCount\" == 1 ]]; then \n"
             - "  echo Running on a singe node."
             - "else \n"
             - "  echo Running on multiple nodes.  Configuring membership in neo4j.conf..."
