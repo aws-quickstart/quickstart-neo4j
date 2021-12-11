@@ -34,7 +34,7 @@ Parameters:
   NodeCount:
     Description: Number of core nodes
     Type: Number
-    Default: 1
+    Default: 3
     AllowedValues:
       - 1
       - 3
