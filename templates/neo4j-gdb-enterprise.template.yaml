@@ -2,14 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Graph Database
 Parameters:
 
-  Edition:
-    Description: Edition
-    Type: String
-    Default: 'enterprise'
-    AllowedValues:
-      - 'enterprise'
-      - 'community'
-
   Version:
     Description: Version
     Type: String
@@ -99,10 +91,6 @@ Resources:
           - - "#!/bin/bash\n"
             - "echo Running startup script...\n"
 
-            - "edition="
-            - Ref: Edition
-            - "\n"
-
             - "version="
             - Ref: Version
             - "\n"
@@ -126,13 +114,7 @@ Resources:
 
             - "echo Installing Neo4j...\n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
-            - "if [[ \"$edition\" == community ]]; then\n"
-            - "  echo Installing community edition.\n"
-            - "  yum -y install neo4j-${version}\n"
-            - "else\n"
-            - "  echo Installing enterprise edition.\n"
-            - "  yum -y install neo4j-enterprise-${version}\n"
-            - "fi\n"
+            - "yum -y install neo4j-enterprise-${version}\n"
 
             - "echo Configuring network in neo4j.conf...\n"
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf\n"
