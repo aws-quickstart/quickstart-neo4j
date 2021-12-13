@@ -1,0 +1,7 @@
+taskcat_outputs
+.DS_Store
+.taskcat_overrides.yml
+.vscode
+
+delete.sh
+deploy.sh
