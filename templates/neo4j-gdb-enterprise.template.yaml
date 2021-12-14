@@ -16,12 +16,17 @@ Parameters:
     Default: t3.medium
     AllowedValues:
       - t3.medium
-      - r4.large
-      - r4.xlarge
-      - r4.2xlarge
-      - r4.4xlarge
-      - r4.8xlarge
-      - r4.16xlarge
+      - t3.large
+      - t3.xlarge
+      - r6i.large
+      - r6i.xlarge
+      - r6i.2xlarge
+      - r6i.4xlarge
+      - r6i.8xlarge
+      - r6i.12xlarge
+      - r6i.16xlarge
+      - r6i.24xlarge
+      - r6i.32xlarge
 
   NodeCount:
     Description: Number of core nodes
