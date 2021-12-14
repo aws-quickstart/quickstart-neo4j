@@ -30,7 +30,6 @@ Parameters:
     AllowedValues:
       - 1
       - 3
-      - 5
 
   Password:
     Description: Password for Neo4j
@@ -162,7 +161,7 @@ Resources:
           Statement:
           - Effect: Allow
             Action:
-            - cloudformation:DescribeStack*
+            - cloudformation:DescribeStackResource
             - autoscaling:DescribeAutoScalingInstances
             - ec2:DescribeInstances
             Resource: "*"
