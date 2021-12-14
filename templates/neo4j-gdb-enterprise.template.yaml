@@ -103,9 +103,9 @@ Resources:
             - Ref: NodeCount
             - "\n"
 
-            - "password=${"
+            - "password="
             - Ref: Password
-            - "}\n"
+            - "\n"
 
             - "echo Adding neo4j yum repo...\n"
             - "rpm --import https://debian.neo4j.com/neotechnology.gpg.key\n"
