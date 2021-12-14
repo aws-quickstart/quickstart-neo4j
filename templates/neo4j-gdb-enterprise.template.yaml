@@ -167,7 +167,7 @@ Resources:
           - Effect: Allow
             Action:
             - autoscaling:DescribeAutoScalingInstances
-            - cloudformation:DescribeStackResource
+            - cloudformation:DescribeStack*
             - ec2:DescribeInstances
             Resource: "*"
   Neo4jSecurityGroup:
