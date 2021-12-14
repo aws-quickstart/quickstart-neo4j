@@ -64,7 +64,7 @@ Resources:
       LaunchConfigurationName:
         Ref: Neo4jLaunchConfiguration
       MinSize: 1
-      MaxSize: 5
+      MaxSize: 3
       DesiredCapacity:
         Ref: NodeCount
 
