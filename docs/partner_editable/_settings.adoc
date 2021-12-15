@@ -1,5 +1,5 @@
 // Change the following attributes.
-:quickstart-project-name: neo4j
+:quickstart-project-name: quickstart-neo4j
 :partner-product-name: Neo4j Enterprise
 // For the following attribute, if you have no short name, enter the same name as partner-product-name.
 :partner-product-short-name: Neo4j Enterprise
