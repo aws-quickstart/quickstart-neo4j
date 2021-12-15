@@ -4,10 +4,34 @@ Parameters:
   GraphDatabaseVersion:
     Description: Neo4j Graph Database Version
     Type: String
-    Default: '4.4.0'
+    Default: '4.4.1'
     AllowedValues:
+      - '4.4.1'
       - '4.4.0'
+      - '4.3.8'
       - '4.3.7'
+
+  GraphDataScienceVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: 'None'
+    AllowedValues:
+      - 'None'
+      - '1.8.0'
+
+  BloomVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: 'None'
+    AllowedValues:
+      - 'None'
+      - '2.0.0'
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    MinLength: 6
+    NoEcho: true
 
   NodeCount:
     Description: Number of core nodes
@@ -39,12 +63,6 @@ Parameters:
     Description: Size in GB of the EBS volume on each node
     Type: Number
     Default: 100
-
-  Password:
-    Description: Password for Neo4j
-    Type: String
-    MinLength: 6
-    NoEcho: true
 
   KeyName:
     Description: Name of an existing EC2 KeyPair
@@ -99,12 +117,20 @@ Resources:
             - Ref: GraphDatabaseVersion
             - "\n"
 
-            - "nodeCount="
-            - Ref: NodeCount
+            - "graphDataScienceVersion="
+            - Ref: GraphDataScienceVersion
+            - "\n"
+
+            - "bloomVersion="
+            - Ref: BloomVersion
             - "\n"
 
             - "password="
             - Ref: Password
+            - "\n"
+
+            - "nodeCount="
+            - Ref: NodeCount
             - "\n"
 
             - "echo Adding neo4j yum repo...\n"
@@ -139,6 +165,24 @@ Resources:
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
             
+            - "if [[ \"$graphDataScienceVersion\" != None ]]; then\n"
+            - "  echo Installing Graph Data Science...\n"
+            - "  curl \"https://s3-eu-west-1.amazonaws.com/com.neo4j.graphalgorithms.dist/graph-data-science/neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\" -o neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
+            - "  unzip neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
+            - "  mv neo4j-graph-data-science-${graphDataScienceVersion}.jar /var/lib/neo4j/plugins\n"
+            - "fi\n"
+
+            - "if [[ \"$bloomVersion\" != None ]]; then\n"
+            - "  echo Installing Bloom...\n"
+            - "  curl -L \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip\n"
+            - "  unzip neo4j-bloom-${bloomVersion}.zip\n"
+            - "  mv \"bloom-plugin-4.x-${bloomVersion}.jar\" /var/lib/neo4j/plugins\n"
+            - "fi\n"
+
+            - "echo Configuring Graph Data Science and Bloom in neo4j.conf...\n"
+            - "sed -i s/#dbms.security.procedures.unrestricted=my.extensions.example,my.procedures.*/dbms.security.procedures.unrestricted=gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
+            - "sed -i s/#dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
+
             - "echo Starting Neo4j...\n"
             - "service neo4j start\n"
             - "neo4j-admin set-initial-password ${password}\n"
