@@ -12,16 +12,24 @@ Parameters:
   GraphDataScienceVersion:
     Description: Neo4j Graph Data Science Version
     Type: String
-    Default: '1.8.0'
+    Default: 'None'
     AllowedValues:
+      - 'None'
       - '1.8.0'
 
   BloomVersion:
     Description: Neo4j Graph Data Science Version
     Type: String
-    Default: '2.0.0'
+    Default: 'None'
     AllowedValues:
+      - 'None'
       - '2.0.0'
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    MinLength: 6
+    NoEcho: true
 
   NodeCount:
     Description: Number of core nodes
@@ -53,12 +61,6 @@ Parameters:
     Description: Size in GB of the EBS volume on each node
     Type: Number
     Default: 100
-
-  Password:
-    Description: Password for Neo4j
-    Type: String
-    MinLength: 6
-    NoEcho: true
 
   KeyName:
     Description: Name of an existing EC2 KeyPair
@@ -121,12 +123,12 @@ Resources:
             - Ref: BloomVersion
             - "\n"
 
-            - "nodeCount="
-            - Ref: NodeCount
-            - "\n"
-
             - "password="
             - Ref: Password
+            - "\n"
+
+            - "nodeCount="
+            - Ref: NodeCount
             - "\n"
 
             - "echo Adding neo4j yum repo...\n"
