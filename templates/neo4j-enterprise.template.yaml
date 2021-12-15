@@ -7,9 +7,7 @@ Parameters:
     Default: '4.4.1'
     AllowedValues:
       - '4.4.1'
-      - '4.4.0'
       - '4.3.8'
-      - '4.3.7'
 
   GraphDataScienceVersion:
     Description: Neo4j Graph Data Science Version
@@ -26,6 +24,10 @@ Parameters:
     AllowedValues:
       - 'None'
       - '2.0.0'
+
+  LicenseKey:
+    Description: Optional License Key for Graph Data Science and/or Bloom
+    Type: String
 
   Password:
     Description: Password for Neo4j
@@ -125,6 +127,10 @@ Resources:
             - Ref: BloomVersion
             - "\n"
 
+            - "licenseKey="
+            - Ref: LicenseKey
+            - "\n"
+
             - "password="
             - Ref: Password
             - "\n"
@@ -141,6 +147,9 @@ Resources:
             - "baseurl=http://yum.neo4j.com/stable\n"
             - "enabled=1\n"
             - "gpgcheck=1\" > /etc/yum.repos.d/neo4j.repo\n"
+
+            - "echo Writing neo4j license key file...\n"
+            - "echo $licenseKey > /etc/neo4j/license/neo4j.license\n"
 
             - "echo Installing Graph Database...\n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
@@ -226,12 +235,12 @@ Resources:
         ToPort: 22
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
-        FromPort: 7474
-        ToPort: 7474
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
         FromPort: 7473
         ToPort: 7473
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7474
+        ToPort: 7474
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
         FromPort: 7687
