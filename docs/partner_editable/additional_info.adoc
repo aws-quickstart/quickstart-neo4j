@@ -2,10 +2,12 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-// If steps are required to test the deployment, add them here. If not, remove the heading
+To verify that your deployment worked go to port 7473 or 7474 of your server and verify that you have a logon page.
 
 == Post-deployment steps
-// If post-deployment steps are required, add them here. If not, remove the heading
+Once the stack is deployed go to the server IP (or DNS name if you made one) on port 7473 or 7474 and login with the password you provided during the deployment.
+
+//image::../images/neo4j_login.png[Login Page]
 
 == Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
@@ -20,4 +22,20 @@ _Add any security-related information._
 == Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
 
-_Add any other details that will help the customer use the software on AWS._
+This quickstart creates a security group with the following ports open: +
+Port 22:  SSH +
+Port 7474:  HTTP +
+Port 7473:  HTTPS +
+Port 7687:  Bolt +
+Port 5000:  Causal Cluster discovery management +
+Port 6000:  Causal Cluster transaction +
+Port 7000:  Causal Cluster RAFT +
+Port 7688:  Causal Cluster routing connector +
+Port 2003:  Graphite monitoring +
+Port 2004:  Prometheus monitoring +
+Port 3637:  JMX monitoring +
+Port 5005:  Remote debugging
+
+
+
+
