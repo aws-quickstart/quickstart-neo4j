@@ -7,7 +7,6 @@ Parameters:
     Default: '4.4.0'
     AllowedValues:
       - '4.4.0'
-      - '4.3.7'
 
   GraphDataScienceVersion:
     Description: Neo4j Graph Data Science Version
@@ -15,7 +14,6 @@ Parameters:
     Default: '1.8.0'
     AllowedValues:
       - '1.8.0'
-      - '1.7.3'
 
   BloomVersion:
     Description: Neo4j Graph Data Science Version
@@ -138,12 +136,14 @@ Resources:
             - "unzip neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
             - "mv neo4j-graph-data-science-${graphDataScienceVersion}.jar /var/lib/neo4j/plugins"
 
-            - "echo Configuring Graph Data Science...\n"
-            - "sed -i s/#dbms.security.procedures.unrestricted=my.extensions.example,my.procedures.*/dbms.security.procedures.unrestricted=gds.*/g /etc/neo4j/neo4j.conf\n"
-            - "sed -i s/#dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/g /etc/neo4j/neo4j.conf\n"
-
             - "echo Installing Bloom...\n"
-            - "curl -s \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip"
+            - "curl -s -L \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip\n"
+            - "unzip neo4j-bloom-${bloomVersion}.zip\n"
+            - "mv \"bloom-plugin-4.x-${bloomVersion}.jar\" /var/lib/neo4j/plugins\n"
+
+            - "echo Configuring Graph Data Science and Bloom...\n"
+            - "sed -i s/#dbms.security.procedures.unrestricted=my.extensions.example,my.procedures.*/dbms.security.procedures.unrestricted=gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
+            - "sed -i s/#dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
 
             - "service neo4j start\n"
             - "neo4j-admin set-initial-password ${password}\n"
