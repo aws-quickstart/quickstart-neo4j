@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
 Parameters:
-  Version:
-    Description: Neo4j Version
+  GraphDatabaseVersion:
+    Description: Neo4j Graph Database Version
     Type: String
     Default: '4.4.0'
     AllowedValues:
@@ -95,8 +95,8 @@ Resources:
           - - "#!/bin/bash\n"
             - "echo Running startup script...\n"
 
-            - "version="
-            - Ref: Version
+            - "graphDatabaseVersion="
+            - Ref: GraphDatabaseVersion
             - "\n"
 
             - "nodeCount="
@@ -118,7 +118,7 @@ Resources:
 
             - "echo Installing Neo4j...\n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
-            - "yum -y install neo4j-enterprise-${version}\n"
+            - "yum -y install neo4j-enterprise-${graphDatabaseVersion}\n"
 
             - "echo Configuring network in neo4j.conf...\n"
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf\n"
