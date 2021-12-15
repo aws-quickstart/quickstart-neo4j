@@ -1,13 +1,39 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
 Parameters:
-  Version:
-    Description: Neo4j Version
+  GraphDatabaseVersion:
+    Description: Neo4j Graph Database Version
     Type: String
-    Default: '4.4.0'
+    Default: '4.4.1'
     AllowedValues:
-      - '4.4.0'
-      - '4.3.7'
+      - '4.4.1'
+      - '4.3.8'
+
+  GraphDataScienceVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: 'None'
+    AllowedValues:
+      - 'None'
+      - '1.8.0'
+
+  BloomVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: 'None'
+    AllowedValues:
+      - 'None'
+      - '2.0.0'
+
+  LicenseKey:
+    Description: Optional License Key for Graph Data Science and/or Bloom
+    Type: String
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    MinLength: 6
+    NoEcho: true
 
   NodeCount:
     Description: Number of core nodes
@@ -40,22 +66,15 @@ Parameters:
     Type: Number
     Default: 100
 
-  Password:
-    Description: Password for Neo4j
-    Type: String
-    MinLength: 6
-    NoEcho: true
-
   KeyName:
     Description: Name of an existing EC2 KeyPair
-    Type: 'AWS::EC2::KeyPair::KeyName'
+    Type: AWS::EC2::KeyPair::KeyName
 
-  AMIID:
+  ImageId:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
 Resources:
-
   Neo4jAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -71,18 +90,19 @@ Resources:
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: !Ref 'AMIID'
+      ImageId: !Ref ImageId
       InstanceType:
         Ref: InstanceType
       SecurityGroups:
-      - Ref: Neo4jSecurityGroup
+      - Ref: Neo4jExternalSecurityGroup
+      - Ref: Neo4jInternalSecurityGroup
       KeyName:
         Ref: KeyName
       EbsOptimized: true
       IamInstanceProfile:
         Ref: Neo4jInstanceProfile
       BlockDeviceMappings:
-      - DeviceName: "/dev/xvda"
+      - DeviceName: /dev/xvda
         Ebs:
           VolumeSize:
             Ref: DiskSize
@@ -95,16 +115,28 @@ Resources:
           - - "#!/bin/bash\n"
             - "echo Running startup script...\n"
 
-            - "version="
-            - Ref: Version
+            - "graphDatabaseVersion="
+            - Ref: GraphDatabaseVersion
             - "\n"
 
-            - "nodeCount="
-            - Ref: NodeCount
+            - "graphDataScienceVersion="
+            - Ref: GraphDataScienceVersion
+            - "\n"
+
+            - "bloomVersion="
+            - Ref: BloomVersion
+            - "\n"
+
+            - "licenseKey="
+            - Ref: LicenseKey
             - "\n"
 
             - "password="
             - Ref: Password
+            - "\n"
+
+            - "nodeCount="
+            - Ref: NodeCount
             - "\n"
 
             - "echo Adding neo4j yum repo...\n"
@@ -116,9 +148,12 @@ Resources:
             - "enabled=1\n"
             - "gpgcheck=1\" > /etc/yum.repos.d/neo4j.repo\n"
 
-            - "echo Installing Neo4j...\n"
+            - "echo Writing neo4j license key file...\n"
+            - "echo $licenseKey > /etc/neo4j/license/neo4j.license\n"
+
+            - "echo Installing Graph Database...\n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
-            - "yum -y install neo4j-enterprise-${version}\n"
+            - "yum -y install neo4j-enterprise-${graphDatabaseVersion}\n"
 
             - "echo Configuring network in neo4j.conf...\n"
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf\n"
@@ -138,7 +173,26 @@ Resources:
             - "  sed -i s/#causal_clustering.initial_discovery_members=localhost:5000,localhost:5001,localhost:5002/causal_clustering.initial_discovery_members=${coreMembers}/g /etc/neo4j/neo4j.conf\n"
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
+            
+            - "if [[ \"$graphDataScienceVersion\" != None ]]; then\n"
+            - "  echo Installing Graph Data Science...\n"
+            - "  curl \"https://s3-eu-west-1.amazonaws.com/com.neo4j.graphalgorithms.dist/graph-data-science/neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\" -o neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
+            - "  unzip neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
+            - "  mv neo4j-graph-data-science-${graphDataScienceVersion}.jar /var/lib/neo4j/plugins\n"
+            - "fi\n"
 
+            - "if [[ \"$bloomVersion\" != None ]]; then\n"
+            - "  echo Installing Bloom...\n"
+            - "  curl -L \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip\n"
+            - "  unzip neo4j-bloom-${bloomVersion}.zip\n"
+            - "  mv \"bloom-plugin-4.x-${bloomVersion}.jar\" /var/lib/neo4j/plugins\n"
+            - "fi\n"
+
+            - "echo Configuring Graph Data Science and Bloom in neo4j.conf...\n"
+            - "sed -i s/#dbms.security.procedures.unrestricted=my.extensions.example,my.procedures.*/dbms.security.procedures.unrestricted=gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
+            - "sed -i s/#dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*,bloom.*/g /etc/neo4j/neo4j.conf\n"
+
+            - "echo Starting Neo4j...\n"
             - "service neo4j start\n"
             - "neo4j-admin set-initial-password ${password}\n"
 
@@ -170,56 +224,63 @@ Resources:
             - cloudformation:DescribeStack*
             - ec2:DescribeInstances
             Resource: "*"
-  Neo4jSecurityGroup:
+
+  Neo4jExternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH and Neo4j Ports
+      GroupDescription: Enable SSH and Neo4j External Ports
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 22
         ToPort: 22
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
-        FromPort: 7474
-        ToPort: 7474
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
         FromPort: 7473
         ToPort: 7473
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7474
+        ToPort: 7474
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
         FromPort: 7687
         ToPort: 7687
         CidrIp: 0.0.0.0/0
+
+  Neo4jInternalSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable Neo4j Internal Ports
+      SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 5000
         ToPort: 5000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 6000
         ToPort: 6000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 7000
         ToPort: 7000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 7688
         ToPort: 7688
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 2003
         ToPort: 2003
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 2004
         ToPort: 2004
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 3637
         ToPort: 3637
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 5005
         ToPort: 5005
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
