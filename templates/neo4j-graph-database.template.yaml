@@ -48,7 +48,7 @@ Parameters:
 
   KeyName:
     Description: Name of an existing EC2 KeyPair
-    Type: 'AWS::EC2::KeyPair::KeyName'
+    Type: AWS::EC2::KeyPair::KeyName
 
   AMIID:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -71,7 +71,7 @@ Resources:
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: !Ref 'AMIID'
+      ImageId: !Ref AMIID
       InstanceType:
         Ref: InstanceType
       SecurityGroups:
@@ -82,7 +82,7 @@ Resources:
       IamInstanceProfile:
         Ref: Neo4jInstanceProfile
       BlockDeviceMappings:
-      - DeviceName: "/dev/xvda"
+      - DeviceName: /dev/xvda
         Ebs:
           VolumeSize:
             Ref: DiskSize

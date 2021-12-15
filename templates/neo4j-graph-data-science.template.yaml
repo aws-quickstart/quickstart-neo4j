@@ -55,7 +55,7 @@ Parameters:
 
   KeyName:
     Description: Name of an existing EC2 KeyPair
-    Type: 'AWS::EC2::KeyPair::KeyName'
+    Type: AWS::EC2::KeyPair::KeyName
 
   AMIID:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -66,7 +66,7 @@ Resources:
   Ec2Instance: 
     Type: AWS::EC2::Instance
     Properties: 
-      ImageId: !Ref 'AMIID'
+      ImageId: !Ref AMIID
       KeyName:
         Ref: KeyName
       NetworkInterfaces:
