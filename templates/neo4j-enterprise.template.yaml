@@ -7,9 +7,7 @@ Parameters:
     Default: '4.4.1'
     AllowedValues:
       - '4.4.1'
-      - '4.4.0'
       - '4.3.8'
-      - '4.3.7'
 
   GraphDataScienceVersion:
     Description: Neo4j Graph Data Science Version
