@@ -139,8 +139,8 @@ Resources:
             - "mv neo4j-graph-data-science-${graphDataScienceVersion}.jar /var/lib/neo4j/plugins"
 
             - "echo Configuring Graph Data Science...\n"
-            - "#dbms.security.procedures.unrestricted=gds.*"
-            - "#dbms.security.procedures.allowlist=gds.*"
+            - "sed -i s/#dbms.security.procedures.unrestricted=my.extensions.example,my.procedures.*/dbms.security.procedures.unrestricted=gds.*/g /etc/neo4j/neo4j.conf\n"
+            - "sed -i s/#dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/dbms.security.procedures.allowlist=apoc.coll.*,apoc.load.*,gds.*/g /etc/neo4j/neo4j.conf\n"
 
             - "echo Installing Bloom...\n"
             - "curl -s \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip"
