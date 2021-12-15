@@ -37,7 +37,7 @@ Parameters:
       - '1.8.0'
 
   BloomVersion:
-    Description: Neo4j Graph Data Science Version
+    Description: Neo4j Bloom Version
     Type: String
     Default: 'None'
     AllowedValues:
