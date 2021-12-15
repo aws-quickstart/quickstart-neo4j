@@ -25,6 +25,10 @@ Parameters:
       - 'None'
       - '2.0.0'
 
+  LicenseKey:
+    Description: Optional License Key for Graph Data Science and/or Bloom
+    Type: String
+
   Password:
     Description: Password for Neo4j
     Type: String
@@ -121,6 +125,10 @@ Resources:
 
             - "bloomVersion="
             - Ref: BloomVersion
+            - "\n"
+
+            - "licenseKey="
+            - Ref: LicenseKey
             - "\n"
 
             - "password="
