@@ -50,12 +50,11 @@ Parameters:
     Description: Name of an existing EC2 KeyPair
     Type: AWS::EC2::KeyPair::KeyName
 
-  AMIID:
+  ImageId:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
 Resources:
-
   Neo4jAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -71,7 +70,7 @@ Resources:
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: !Ref AMIID
+      ImageId: !Ref ImageId
       InstanceType:
         Ref: InstanceType
       SecurityGroups:
@@ -139,7 +138,8 @@ Resources:
             - "  sed -i s/#causal_clustering.initial_discovery_members=localhost:5000,localhost:5001,localhost:5002/causal_clustering.initial_discovery_members=${coreMembers}/g /etc/neo4j/neo4j.conf\n"
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
-
+            
+            - "echo Starting Neo4j...\n"
             - "service neo4j start\n"
             - "neo4j-admin set-initial-password ${password}\n"
 
