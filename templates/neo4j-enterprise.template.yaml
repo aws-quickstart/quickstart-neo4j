@@ -284,3 +284,11 @@ Resources:
         FromPort: 5005
         ToPort: 5005
         SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
+
+Outputs:
+  Neo4jURL:
+    Description: URL for Neo4j
+    Value:
+      Fn::Join:
+        - ''
+        - - 'You can login to Neo4j on port 7474 of an node in the autoscaling group.'
