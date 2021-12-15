@@ -1,0 +1,130 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Neo4j Graph Data Science. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
+Parameters:
+  GraphDatabaseVersion:
+    Description: Neo4j Graph Database Version
+    Type: String
+    Default: '4.4.0'
+    AllowedValues:
+      - '4.4.0'
+      - '4.3.7'
+
+  GraphDataScienceVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: '1.8.0'
+    AllowedValues:
+      - '1.8.0'
+      - '1.7.3'
+
+  BloomVersion:
+    Description: Neo4j Graph Data Science Version
+    Type: String
+    Default: '2.0.0'
+    AllowedValues:
+      - '2.0.0'
+
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t3.medium
+    AllowedValues:
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - r6i.large
+      - r6i.xlarge
+      - r6i.2xlarge
+      - r6i.4xlarge
+      - r6i.8xlarge
+      - r6i.12xlarge
+      - r6i.16xlarge
+      - r6i.24xlarge
+      - r6i.32xlarge
+
+  DiskSize:
+    Description: Size in GB of the EBS volume on each node
+    Type: Number
+    Default: 100
+
+  Password:
+    Description: Password for Neo4j
+    Type: String
+    MinLength: 6
+    NoEcho: true
+
+  KeyName:
+    Description: Name of an existing EC2 KeyPair
+    Type: AWS::EC2::KeyPair::KeyName
+
+  AMIID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+
+Resources:
+
+  Ec2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: !Ref AMIID
+      KeyName:
+        Ref: KeyName
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          GroupSet: 
+            - Ref: Neo4jSecurityGroup
+
+  Neo4jSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH and Neo4j Ports
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7474
+        ToPort: 7474
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7473
+        ToPort: 7473
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7687
+        ToPort: 7687
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 5000
+        ToPort: 5000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 6000
+        ToPort: 6000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7000
+        ToPort: 7000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7688
+        ToPort: 7688
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 2003
+        ToPort: 2003
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 2004
+        ToPort: 2004
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 3637
+        ToPort: 3637
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 5005
+        ToPort: 5005
+        CidrIp: 0.0.0.0/0

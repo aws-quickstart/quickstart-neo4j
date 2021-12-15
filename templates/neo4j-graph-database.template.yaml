@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
 Parameters:
-  Version:
-    Description: Neo4j Version
+  GraphDatabaseVersion:
+    Description: Neo4j Graph Database Version
     Type: String
     Default: '4.4.0'
     AllowedValues:
@@ -48,7 +48,7 @@ Parameters:
 
   KeyName:
     Description: Name of an existing EC2 KeyPair
-    Type: 'AWS::EC2::KeyPair::KeyName'
+    Type: AWS::EC2::KeyPair::KeyName
 
   AMIID:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -71,18 +71,19 @@ Resources:
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: !Ref 'AMIID'
+      ImageId: !Ref AMIID
       InstanceType:
         Ref: InstanceType
       SecurityGroups:
-      - Ref: Neo4jSecurityGroup
+      - Ref: Neo4jExternalSecurityGroup
+      - Ref: Neo4jInternalSecurityGroup
       KeyName:
         Ref: KeyName
       EbsOptimized: true
       IamInstanceProfile:
         Ref: Neo4jInstanceProfile
       BlockDeviceMappings:
-      - DeviceName: "/dev/xvda"
+      - DeviceName: /dev/xvda
         Ebs:
           VolumeSize:
             Ref: DiskSize
@@ -95,8 +96,8 @@ Resources:
           - - "#!/bin/bash\n"
             - "echo Running startup script...\n"
 
-            - "version="
-            - Ref: Version
+            - "graphDatabaseVersion="
+            - Ref: GraphDatabaseVersion
             - "\n"
 
             - "nodeCount="
@@ -116,9 +117,9 @@ Resources:
             - "enabled=1\n"
             - "gpgcheck=1\" > /etc/yum.repos.d/neo4j.repo\n"
 
-            - "echo Installing Neo4j...\n"
+            - "echo Installing Graph Database...\n"
             - "export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
-            - "yum -y install neo4j-enterprise-${version}\n"
+            - "yum -y install neo4j-enterprise-${graphDatabaseVersion}\n"
 
             - "echo Configuring network in neo4j.conf...\n"
             - "sed -i 's/#dbms.default_listen_address=0.0.0.0/dbms.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf\n"
@@ -170,10 +171,11 @@ Resources:
             - cloudformation:DescribeStack*
             - ec2:DescribeInstances
             Resource: "*"
-  Neo4jSecurityGroup:
+
+  Neo4jExternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH and Neo4j Ports
+      GroupDescription: Enable SSH and Neo4j External Ports
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 22
@@ -191,35 +193,41 @@ Resources:
         FromPort: 7687
         ToPort: 7687
         CidrIp: 0.0.0.0/0
+
+  Neo4jInternalSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable Neo4j Internal Ports
+      SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 5000
         ToPort: 5000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 6000
         ToPort: 6000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 7000
         ToPort: 7000
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 7688
         ToPort: 7688
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 2003
         ToPort: 2003
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 2004
         ToPort: 2004
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 3637
         ToPort: 3637
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 5005
         ToPort: 5005
-        CidrIp: 0.0.0.0/0
+        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
