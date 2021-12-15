@@ -232,12 +232,12 @@ Resources:
         ToPort: 22
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
-        FromPort: 7474
-        ToPort: 7474
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
         FromPort: 7473
         ToPort: 7473
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7474
+        ToPort: 7474
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
         FromPort: 7687
