@@ -132,12 +132,12 @@ Resources:
             - "sed -i s/#dbms.default_advertised_address=localhost/dbms.default_advertised_address=${publicHostname}/g /etc/neo4j/neo4j.conf\n"
 
             - "echo Installing Graph Data Science...\n"
-            - "curl -s \"https://s3-eu-west-1.amazonaws.com/com.neo4j.graphalgorithms.dist/graph-data-science/neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\" -o neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
+            - "curl \"https://s3-eu-west-1.amazonaws.com/com.neo4j.graphalgorithms.dist/graph-data-science/neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\" -o neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
             - "unzip neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
             - "mv neo4j-graph-data-science-${graphDataScienceVersion}.jar /var/lib/neo4j/plugins\n"
 
             - "echo Installing Bloom...\n"
-            - "curl -s -L \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip\n"
+            - "curl -L \"https://neo4j.com/artifact.php?name=neo4j-bloom-${bloomVersion}.zip\" -o neo4j-bloom-${bloomVersion}.zip\n"
             - "unzip neo4j-bloom-${bloomVersion}.zip\n"
             - "mv \"bloom-plugin-4.x-${bloomVersion}.jar\" /var/lib/neo4j/plugins\n"
 
