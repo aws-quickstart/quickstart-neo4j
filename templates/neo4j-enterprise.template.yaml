@@ -18,6 +18,25 @@ Metadata:
           - InstanceType
           - DiskSize
           - KeyName
+  ParameterLabels:
+    GraphDatabaseVersion: 
+      default: Graph Database Version
+    GraphDataScienceVersion: 
+      default: Graph Data Science Version
+    BloomVersion:
+      default: Bloom Version
+    Password: 
+      default: Password
+    LicenseKey: 
+      default: License Key
+    NodeCount: 
+      default: Node Count
+    InstanceType: 
+      default: Instance Type
+    DiskSize: 
+      default: Disk Size
+    KeyName: 
+      default: Key Name
 
 Parameters:
   GraphDatabaseVersion:
