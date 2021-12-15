@@ -73,11 +73,6 @@ Resources:
         - Neo4jExternalSecurityGroup
         - Neo4jInternalSecurityGroup
 
-  Neo4jEIP:
-    Type: AWS::EC2::EIP
-    Properties:
-      InstanceId: Neo4jInstance
-
   Neo4jExternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
