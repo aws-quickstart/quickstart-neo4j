@@ -138,7 +138,8 @@ Resources:
             - "  sed -i s/#causal_clustering.initial_discovery_members=localhost:5000,localhost:5001,localhost:5002/causal_clustering.initial_discovery_members=${coreMembers}/g /etc/neo4j/neo4j.conf\n"
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
-
+            
+            - "echo Starting Neo4j...\n"
             - "service neo4j start\n"
             - "neo4j-admin set-initial-password ${password}\n"
 
