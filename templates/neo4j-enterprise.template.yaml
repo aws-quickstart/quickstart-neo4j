@@ -9,8 +9,8 @@ Metadata:
           - GraphDatabaseVersion
           - GraphDataScienceVersion
           - BloomVersion
-          - LicenseKey
           - Password
+          - LicenseKey
       - Label: 
           default: "Infrastructure Configuration"
         Parameters: 
@@ -44,15 +44,15 @@ Parameters:
       - 'None'
       - '2.0.0'
 
-  LicenseKey:
-    Description: Optional License Key for Graph Data Science and/or Bloom
-    Type: String
-
   Password:
     Description: Password for Neo4j
     Type: String
     MinLength: 6
     NoEcho: true
+
+  LicenseKey:
+    Description: Optional License Key for Graph Data Science and/or Bloom
+    Type: String
 
   NodeCount:
     Description: Number of core nodes
@@ -147,12 +147,12 @@ Resources:
             - Ref: BloomVersion
             - "\n"
 
-            - "licenseKey="
-            - Ref: LicenseKey
-            - "\n"
-
             - "password="
             - Ref: Password
+            - "\n"
+
+            - "licenseKey="
+            - Ref: LicenseKey
             - "\n"
 
             - "nodeCount="
