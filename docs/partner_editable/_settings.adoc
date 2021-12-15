@@ -11,7 +11,7 @@
 //:partner-contributors: Shuai Ye, Michael McConnell, and John Smith, {partner-company-name}
 //:other-contributors: Akua Mansa, Trek10
 //:aws-contributors: Janine Singh, AWS IoT Partner team
-:quickstart-contributors: Neo4j Team
+//:quickstart-contributors: Neo4j Team
 // For deployment_time, use minutes if deployment takes an hour or less, 
 // for example, 30 minutes or 60 minutes. 
 // Use hours for deployment times greater than 60 minutes (rounded to a quarter hour),
@@ -33,7 +33,7 @@
 // :terraform_qs:
 // Uncomment the following two attributes if you are deploying a Terraform Quick Start. Comment out :parameters_as_appendix: also.
 // :no_parameters:
-:git_repo_url: https://github.com/neo4j/neo4j
+//:git_repo_url: https://github.com/neo4j/neo4j
 // Uncomment the following attribute if you are deploying AWS Control Tower. 
 // :control_tower
 // Uncomment the following attribute if your repo is going to stay private after publishing.
