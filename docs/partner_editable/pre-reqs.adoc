@@ -4,12 +4,12 @@
 
 Verify that your AWS account has the permissions required to create the resources listed in the link:#_resource_quotas[Resource quotas] section of this guide.
 
-// Describe any setup required in the AWS account prior to template launch.
+Make sure that you are in the correct region in which you wish to deploy the Neo4j Enterprise solution.
 
-==== Prepare your {partner-company-name} account
+//==== Prepare your {partner-company-name} account
 
 // Describe any setup required in the partner portal/account prior to template launch.
 
-==== Prepare for the deployment
+//==== Prepare for the deployment
 
-// Describe any preparation required to complete the product build, such as obtaining licenses or placing files in S3.
+

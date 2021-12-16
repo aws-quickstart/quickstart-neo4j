@@ -3,4 +3,12 @@
 // Include links if helpful. 
 // You don't need to list AWS services or point to general info about AWS; the boilerplate already covers this.
 
-This Quick Start also assumes familiarity with VPCs, security groups, EC2 instances, auto scaling groups and IAM roles.
+This Quick Start assumes familiarity with VPCs, security groups, EC2 instances, auto scaling groups and IAM roles as well as Elastic IPs. +
+For more information visit: +
+https://docs.aws.amazon.com/vpc/?id=docs_gateway[VPC, window="_blank"] +
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html[Security Groups, window="_blank"] +
+https://docs.aws.amazon.com/ec2/index.html[EC2 Instances, window="_blank"] +
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/AutoScalingGroup.html[Auto Scaling Groups, window=_blank"] +
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html[IAM Roles, window=_blank"] +
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html[Elastic IPs, window=_blank"] +
+
