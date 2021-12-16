@@ -1,5 +1,43 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
+Metadata:
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - Label: 
+          default: "Neo4j Configuration"
+        Parameters: 
+          - GraphDatabaseVersion
+          - GraphDataScienceVersion
+          - BloomVersion
+          - Password
+          - LicenseKey
+      - Label: 
+          default: "Infrastructure Configuration"
+        Parameters: 
+          - NodeCount
+          - InstanceType
+          - DiskSize
+          - KeyName
+  ParameterLabels:
+    GraphDatabaseVersion: 
+      default: Graph Database Version
+    GraphDataScienceVersion: 
+      default: Graph Data Science Version
+    BloomVersion:
+      default: Bloom Version
+    Password: 
+      default: Password
+    LicenseKey: 
+      default: License Key
+    NodeCount: 
+      default: Node Count
+    InstanceType: 
+      default: Instance Type
+    DiskSize: 
+      default: Disk Size
+    KeyName: 
+      default: Key Name
+
 Parameters:
   GraphDatabaseVersion:
     Description: Neo4j Graph Database Version
@@ -18,22 +56,22 @@ Parameters:
       - '1.8.0'
 
   BloomVersion:
-    Description: Neo4j Graph Data Science Version
+    Description: Neo4j Bloom Version
     Type: String
     Default: 'None'
     AllowedValues:
       - 'None'
       - '2.0.0'
 
-  LicenseKey:
-    Description: Optional License Key for Graph Data Science and/or Bloom
-    Type: String
-
   Password:
     Description: Password for Neo4j
     Type: String
     MinLength: 6
     NoEcho: true
+
+  LicenseKey:
+    Description: Optional License Key for Graph Data Science and/or Bloom
+    Type: String
 
   NodeCount:
     Description: Number of core nodes
@@ -71,6 +109,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
 
   ImageId:
+    Description: AMI ID for each node
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
@@ -127,12 +166,12 @@ Resources:
             - Ref: BloomVersion
             - "\n"
 
-            - "licenseKey="
-            - Ref: LicenseKey
-            - "\n"
-
             - "password="
             - Ref: Password
+            - "\n"
+
+            - "licenseKey="
+            - Ref: LicenseKey
             - "\n"
 
             - "nodeCount="
@@ -284,3 +323,11 @@ Resources:
         FromPort: 5005
         ToPort: 5005
         SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
+
+Outputs:
+  Neo4jURL:
+    Description: URL for Neo4j
+    Value:
+      Fn::Join:
+        - ''
+        - - 'You can login to Neo4j on port 7474 of an node in the autoscaling group.'
