@@ -20,7 +20,7 @@ endif::marketplace_subscription[]
 
 === Launch the Quick Start
 // Adapt the following warning to your Quick Start.
-WARNING: This will deploy {partner-product-short-name} into the default VPC.  This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^]. The machines require elastic IPs.  For more information on this please visit https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html.
+WARNING: This will deploy {partner-product-short-name} into the default VPC.  This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
 
 Each deployment takes about {deployment_time} to complete.
 
