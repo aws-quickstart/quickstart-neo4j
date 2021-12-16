@@ -5,9 +5,17 @@
 To verify that your deployment worked go to port 7474 of your server and verify that you have a logon page.
 
 == Post-deployment steps
-Once the stack is deployed go to the server IP or DNS name you created on port 7474 and login with the password you provided during the deployment.
+Once the stack is deployed go to the server IP or DNS name you created on port 7474 and login with the password you provided during the deployment. +
 
 //image::../images/neo4j_login.png[Login Page]
+Once all neo4j.conf files have been configured, the instances can be started and the cluster is ready. After the cluster has started, it is possible to connect to any of the instances and run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster: +
+
+image:../images/dbms_cluster_overview.png[DBMS Cluster Overview]
+
+To verify your installation, the library version can be printed by entering into the browser in Neo4j Desktop and calling the gds.version() function:
+
+image:../images/return_gds_version.png[Return GDS Version]
+
 
 == Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
