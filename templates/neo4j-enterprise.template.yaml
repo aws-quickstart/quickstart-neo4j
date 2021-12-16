@@ -213,9 +213,9 @@ Resources:
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
             
-            - "echo Turning HTTPS on in neo4j.conf...\n"
-            - "sed -i 's/dbms.connector.https.enabled=false/dbms.connector.https.enabled=true/g' /etc/neo4j/neo4j.conf\n"
-            - "sed -i 's/#dbms.connector.bolt.tls_level=DISABLED/dbms.connector.bolt.tls_level=OPTIONAL/g' /etc/neo4j/neo4j.conf\n"
+            - "#echo Turning HTTPS on in neo4j.conf...\n"
+            - "#sed -i 's/dbms.connector.https.enabled=false/dbms.connector.https.enabled=true/g' /etc/neo4j/neo4j.conf\n"
+            - "#sed -i 's/#dbms.connector.bolt.tls_level=DISABLED/dbms.connector.bolt.tls_level=OPTIONAL/g' /etc/neo4j/neo4j.conf\n"
 
             - "if [[ \"$graphDataScienceVersion\" != None ]]; then\n"
             - "  echo Installing Graph Data Science...\n"
