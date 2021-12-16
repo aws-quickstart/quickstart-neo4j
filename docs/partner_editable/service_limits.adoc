@@ -3,7 +3,7 @@
 |Resource |This deployment uses
 
 // Space needed to maintain table headers
-|Elastic IP addresses | 2
+|Elastic IP addresses | 3+
 |Security groups | 1
 |AWS Identity and Access Management (IAM) roles | 1
 |Auto Scaling groups | 1

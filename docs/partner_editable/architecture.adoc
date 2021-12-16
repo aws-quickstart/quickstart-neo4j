@@ -12,7 +12,7 @@ image::../images/neo4j_architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
-* A highly available architecture that spans two Availability Zones.
+* A highly available architecture that spans three Availability Zones.
 * In the public subnets:
 ** Linux EC2 instances in an Auto Scaling Group
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are also represented in the architecture diagram. End each bullet with a period.
