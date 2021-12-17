@@ -2,12 +2,12 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-To verify that your deployment worked go to *\http://<your server>:7474* and verify that you have a logon page.  *Replace your server with either the PUBLIC IP address or DNS name of your server.*
+To verify that your deployment worked go to *\http://<your server>:7474* OR *\https://<your server>:7473* and verify that you have a logon page.  *Replace your server with either the PUBLIC IP address or DNS name of your server.*
 
 image::../images/neo4j_login.png[Login Page]
 
 == Post-deployment steps
-Once the stack is deployed go to *\http://<your server>:7474* and login with the password you provided during the deployment. *Be sure to replace your server with the PUBLIC IP address or the DNS name of your server.* +
+Once the stack is deployed go to *\http://<your server>:7474* OR *\https://<your server>:7473* and login with the password you provided during the deployment. *Be sure to replace your server with the PUBLIC IP address or the DNS name of your server.* +
 
 You will login with the username *neo4j* and the password you supplied during the deployment. After you login you will see: +
 
