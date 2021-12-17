@@ -348,9 +348,7 @@ Resources:
 Outputs:
   Neo4jURL:
     Description: URL for Neo4j
-    Value:
-      Fn::Join:
-        - ''
-        - - 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.  '
-          - 'The username is neo4j.  '
-          - 'The password is what you provided to the template.'
+    Value: 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.'
+  Neo4jUsername:
+    Description: Username for Neo4j
+    Value: 'The username is neo4j.  The password is what you provided to the template.'
