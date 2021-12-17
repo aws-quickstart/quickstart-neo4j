@@ -334,4 +334,4 @@ Outputs:
     Value:
       Fn::Join:
         - ''
-        - - 'You can login to Neo4j on port 7474 of any node in the autoscaling group.'
+        - - 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.'
