@@ -6,5 +6,5 @@
 |Security groups | 1
 |AWS Identity and Access Management (IAM) roles | 1
 |Auto Scaling groups | 1
-|Instances | 3+
+|Instances | 1 or 3
 |===

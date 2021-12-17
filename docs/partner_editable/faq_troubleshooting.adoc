@@ -18,12 +18,10 @@ For more information, see https://docs.aws.amazon.com/AWSCloudFormation/latest/U
 *A.* Launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template-size limitations. For more information, see http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html[AWS CloudFormation quotas^].
 
 '''
-*Q.* I need more information on Neo4j.  Where can I find it?
-
-*A.* For more information on FAQs related to Neo4j please visit our https://neo4j.com/cloud/aura/faq/[FAQs, window=_blank"]
+For more information on FAQs related to Neo4j please visit our https://neo4j.com/cloud/aura/faq/[FAQs, window=_blank"]
 
 == Troubleshooting
 
 For issues with neo4j please visit our knowledge base at https://neo4j.com/developer/kb/ +
-If you are still experiencing issues ssh into the server and check the neo4j log at /var/log/neo4j/debug.log. +
-For issues with cloud init ssh into the server and check the log at /var/log/cloud-init-output.log.
+If you are still experiencing issues ssh into the server and check the neo4j log at */var/log/neo4j/debug.log*. +
+For issues with cloud init ssh into the server and check the log at */var/log/cloud-init-output.log*.
