@@ -2,12 +2,17 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-To verify that your deployment worked go to port 7474 of your server and verify that you have a logon page.
+To verify that your deployment worked go to *\http://<your server>:7474* and verify that you have a logon page.  *Replace your server with either the PUBLIC IP address or DNS name of your server.*
+
+image::../images/neo4j_login.png[Login Page]
 
 == Post-deployment steps
-Once the stack is deployed go to the server IP or DNS name you created on port 7474 and login with the password you provided during the deployment. +
+Once the stack is deployed go to *\http://<your server>:7474* and login with the password you provided during the deployment. *Be sure to replace your server with the PUBLIC IP address or the DNS name of your server.* +
 
-//image::../images/neo4j_login.png[Login Page]
+You will login with the username *neo4j* and the password you supplied during the deployment. After you login you will see: +
+
+image::../images/neo4j_main.png[Main Page]
+
 Once all neo4j.conf files have been configured, the instances can be started and the cluster is ready. After the cluster has started, it is possible to connect to any of the instances and run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster: +
 
 image:../images/dbms_cluster_overview.png[DBMS Cluster Overview]
