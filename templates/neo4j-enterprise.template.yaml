@@ -213,9 +213,24 @@ Resources:
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
             
-            - "#echo Turning HTTPS on in neo4j.conf...\n"
-            - "#sed -i 's/dbms.connector.https.enabled=false/dbms.connector.https.enabled=true/g' /etc/neo4j/neo4j.conf\n"
-            - "#sed -i 's/#dbms.connector.bolt.tls_level=DISABLED/dbms.connector.bolt.tls_level=OPTIONAL/g' /etc/neo4j/neo4j.conf\n"
+            - "#echo Turning HTTPS...\n"
+            - "sed -i 's/dbms.connector.https.enabled=false/dbms.connector.https.enabled=true/g' /etc/neo4j/neo4j.conf\n"
+            - "sed -i 's/#dbms.connector.bolt.tls_level=DISABLED/dbms.connector.bolt.tls_level=OPTIONAL/g' /etc/neo4j/neo4j.conf\n"
+            - "sed -i 's/#dbms.ssl.policy/dbms.ssl.policy/g' /etc/neo4j/neo4j.conf\n"
+
+            - "/etc/pki/tls/certs/make-dummy-cert cert\n"
+            - "awk '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/' cert > private.key\n"
+            - "awk '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/' cert > public.crt\n"
+
+            - "for service in bolt https cluster backup; do\n"
+            - "  mkdir -p /var/lib/neo4j/certificates/${service}/trusted\n"
+            - "  mkdir -p /var/lib/neo4j/certificates/${service}/revoked\n"
+            - "  cp private.key /var/lib/neo4j/certificates/${service}\n"
+            - "  cp public.crt /var/lib/neo4j/certificates/${service}\n"
+            - "done\n"
+
+            - "chown -R neo4j:neo4j /var/lib/neo4j/certificates\n"
+            - "chmod -R 444 /var/lib/neo4j/certificates\n"
 
             - "if [[ \"$graphDataScienceVersion\" != None ]]; then\n"
             - "  echo Installing Graph Data Science...\n"
