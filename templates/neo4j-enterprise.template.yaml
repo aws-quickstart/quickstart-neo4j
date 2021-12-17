@@ -72,6 +72,7 @@ Parameters:
   LicenseKey:
     Description: Optional License Key for Graph Data Science and/or Bloom
     Type: String
+    Default: AWS::NoValue
 
   NodeCount:
     Description: Number of core nodes
