@@ -352,5 +352,5 @@ Outputs:
       Fn::Join:
         - ''
         - - 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.  '
-        - - 'The username is neo4j.  '
-        - - 'The password is what you provided to the template.'
+          - 'The username is neo4j.  '
+          - 'The password is what you provided to the template.'
