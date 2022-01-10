@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Neo4j Graph Database. Do Not Remove Apache License Version 2.0.(qs-1shnl7a6p)
+Description: Neo4j Enterprise. Do Not Remove Apache License Version 2.0. (qs-1shnl7a6p)
 Metadata:
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -72,6 +72,7 @@ Parameters:
   LicenseKey:
     Description: Optional License Key for Graph Data Science and/or Bloom
     Type: String
+    Default: AWS::NoValue
 
   NodeCount:
     Description: Number of core nodes
@@ -213,6 +214,26 @@ Resources:
             - "  sed -i s/#dbms.mode=CORE/dbms.mode=CORE/g /etc/neo4j/neo4j.conf\n"
             - "fi\n"
             
+            - "echo Turning on SSL...\n"
+            - "sed -i 's/dbms.connector.https.enabled=false/dbms.connector.https.enabled=true/g' /etc/neo4j/neo4j.conf\n"
+            - "#sed -i 's/#dbms.connector.bolt.tls_level=DISABLED/dbms.connector.bolt.tls_level=OPTIONAL/g' /etc/neo4j/neo4j.conf\n"
+
+            - "/etc/pki/tls/certs/make-dummy-cert cert\n"
+            - "awk '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/' cert > private.key\n"
+            - "awk '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/' cert > public.crt\n"
+
+            - "#for service in bolt https cluster backup; do\n"
+            - "for service in https; do\n"
+            - "  sed -i \"s/#dbms.ssl.policy.${service}/dbms.ssl.policy.${service}/g\" /etc/neo4j/neo4j.conf\n"
+            - "  mkdir -p /var/lib/neo4j/certificates/${service}/trusted\n"
+            - "  mkdir -p /var/lib/neo4j/certificates/${service}/revoked\n"
+            - "  cp private.key /var/lib/neo4j/certificates/${service}\n"
+            - "  cp public.crt /var/lib/neo4j/certificates/${service}\n"
+            - "done\n"
+
+            - "chown -R neo4j:neo4j /var/lib/neo4j/certificates\n"
+            - "chmod -R 755 /var/lib/neo4j/certificates\n"
+
             - "if [[ \"$graphDataScienceVersion\" != None ]]; then\n"
             - "  echo Installing Graph Data Science...\n"
             - "  curl \"https://s3-eu-west-1.amazonaws.com/com.neo4j.graphalgorithms.dist/graph-data-science/neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\" -o neo4j-graph-data-science-${graphDataScienceVersion}-standalone.zip\n"
@@ -327,7 +348,7 @@ Resources:
 Outputs:
   Neo4jURL:
     Description: URL for Neo4j
-    Value:
-      Fn::Join:
-        - ''
-        - - 'You can login to Neo4j on port 7474 of an node in the autoscaling group.'
+    Value: 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.'
+  Neo4jUsername:
+    Description: Username for Neo4j
+    Value: 'The username is neo4j.  The password is what you provided to the template.'
