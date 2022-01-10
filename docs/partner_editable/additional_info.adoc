@@ -11,6 +11,8 @@ Once the stack is deployed go to *\http://<your server>:7474* OR *\https://<your
 
 You will login with the username *neo4j* and the password you supplied during the deployment. After you login you will see: +
 
+This quickstart deploys three nodes.  You can connect to any of the nodes made available.  If i a node goes down you can connect to a different node and use the web interface on that node.
+
 image::../images/neo4j_main.png[Main Page]
 
 Once all neo4j.conf files have been configured, the instances can be started and the cluster is ready. After the cluster has started, it is possible to connect to any of the instances and run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster: +
