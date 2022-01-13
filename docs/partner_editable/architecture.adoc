@@ -1,6 +1,6 @@
 :xrefstyle: short
 
-Deploying this Quick Start for a new virtual private cloud (VPC) with
+Deploying this Quick Start for the default virtual private cloud (VPC) with
 default parameters builds the following {partner-product-short-name} environment in the
 AWS Cloud.
 
