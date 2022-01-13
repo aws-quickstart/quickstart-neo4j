@@ -1,6 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Neo4j Enterprise. Do Not Remove Apache License Version 2.0. (qs-1shnl7a6p)
 Metadata:
+  QuickStartDocumentation:
+    EntrypointName: "Parameters for deploying the Quick Start"
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
       - Label: 
@@ -76,7 +78,7 @@ Parameters:
   LicenseKey:
     Description: Optional License Key for Graph Data Science and/or Bloom
     Type: String
-    Default: AWS::NoValue
+    Default: ""
 
   NodeCount:
     Description: Number of core nodes
