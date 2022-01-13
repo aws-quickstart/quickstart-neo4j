@@ -132,6 +132,13 @@ Resources:
       MaxSize: 3
       DesiredCapacity:
         Ref: NodeCount
+      Tags:
+        - Key: StackID
+          Value: !Ref 'AWS::StackId'
+          PropagateAtLaunch: true
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
+          PropagateAtLaunch: true
 
   Neo4jLaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -286,6 +293,9 @@ Resources:
             - ec2.amazonaws.com
           Action:
           - sts:AssumeRole
+      ManagedPolicyArns:
+          - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore' 
+      Path: /   
       Policies:
       - PolicyName: Neo4jPolicy
         PolicyDocument:
@@ -293,9 +303,12 @@ Resources:
           Statement:
           - Effect: Allow
             Action:
-            - autoscaling:DescribeAutoScalingInstances
             - ec2:DescribeInstances
+            - ec2:DescribeVpcAttribute
             - cloudformation:DescribeStackResources
+            - autoscaling:CompleteLifecycleAction
+            - autoscaling:RecordLifecycleActionHeartbeat
+            - autoscaling:DescribeAutoScalingInstances
             Resource:
             - '*'
   Neo4jExternalSecurityGroup:
@@ -309,10 +322,6 @@ Resources:
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
         FromPort: 7473
-        ToPort: 7473
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
-        FromPort: 7474
         ToPort: 7474
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
@@ -343,10 +352,6 @@ Resources:
         SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
         FromPort: 2003
-        ToPort: 2003
-        SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
-      - IpProtocol: tcp
-        FromPort: 2004
         ToPort: 2004
         SourceSecurityGroupName: !Ref Neo4jExternalSecurityGroup
       - IpProtocol: tcp
