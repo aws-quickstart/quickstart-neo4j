@@ -18,25 +18,28 @@ Metadata:
           - InstanceType
           - DiskSize
           - KeyName
-  ParameterLabels:
-    GraphDatabaseVersion: 
-      default: Graph Database Version
-    GraphDataScienceVersion: 
-      default: Graph Data Science Version
-    BloomVersion:
-      default: Bloom Version
-    Password: 
-      default: Password
-    LicenseKey: 
-      default: License Key
-    NodeCount: 
-      default: Node Count
-    InstanceType: 
-      default: Instance Type
-    DiskSize: 
-      default: Disk Size
-    KeyName: 
-      default: Key Name
+          - ImageId
+    ParameterLabels:
+      GraphDatabaseVersion: 
+        default: Graph Database Version
+      GraphDataScienceVersion: 
+        default: Graph Data Science Version
+      BloomVersion:
+        default: Bloom Version
+      Password: 
+        default: Password
+      LicenseKey: 
+        default: License Key
+      NodeCount: 
+        default: Node Count
+      InstanceType: 
+        default: Instance Type
+      DiskSize: 
+        default: Disk Size
+      KeyName: 
+        default: Key Name
+      ImageId: 
+        default: AMI ID
 
 Parameters:
   GraphDatabaseVersion:
@@ -264,6 +267,13 @@ Resources:
       - Ref: Neo4jRole
   Neo4jRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+         ignore_checks:
+           - EIAMPolicyWildcardResource
+         ignore_reaons:
+           - EIMPolicyWildCardREsource: "DescribeStackResources needs *"
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -282,10 +292,10 @@ Resources:
           - Effect: Allow
             Action:
             - autoscaling:DescribeAutoScalingInstances
-            - cloudformation:DescribeStack*
             - ec2:DescribeInstances
-            Resource: "*"
-
+            - cloudformation:DescribeStackResources
+            Resource:
+            - '*'
   Neo4jExternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
