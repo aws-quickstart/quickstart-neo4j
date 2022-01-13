@@ -1,0 +1,21 @@
+
+.Neo4j Configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Graph Database Version
+(`GraphDatabaseVersion`)|`4.4.2`|Neo4j Graph Database Version|Graph Data Science Version
+(`GraphDataScienceVersion`)|`None`|Neo4j Graph Data Science Version|Bloom Version
+(`BloomVersion`)|`None`|Neo4j Bloom Version|Password
+(`Password`)|`**__Requires input__**`|Password for Neo4j|License Key
+(`LicenseKey`)|`AWS::NoValue`|Optional License Key for Graph Data Science and/or Bloom
+|===
+.Infrastructure Configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Node Count
+(`NodeCount`)|`3`|Number of core nodes|Instance Type
+(`InstanceType`)|`t3.medium`|EC2 instance type|Disk Size
+(`DiskSize`)|`100`|Size in GB of the EBS volume on each node|Key Name
+(`KeyName`)|`**__Requires input__**`|Name of an existing EC2 KeyPair|AMI ID
+(`ImageId`)|`/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2`|AMI ID for each node
+|===
