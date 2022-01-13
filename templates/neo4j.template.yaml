@@ -42,8 +42,9 @@ Parameters:
   GraphDatabaseVersion:
     Description: Neo4j Graph Database Version
     Type: String
-    Default: '4.4.1'
+    Default: '4.4.2'
     AllowedValues:
+      - '4.4.2'
       - '4.4.1'
       - '4.3.8'
 
