@@ -968,7 +968,7 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <h2 id="_architecture">Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Deploying this Quick Start for a new virtual private cloud (VPC) with
+<p>Deploying this Quick Start for the default virtual private cloud (VPC) with
 default parameters builds the following Neo4j Enterprise environment in the
 AWS Cloud.</p>
 </div>
@@ -1172,7 +1172,7 @@ This will deploy Neo4j Enterprise into the default VPC.  This Quick Start does n
 </table>
 </li>
 <li>
-<p>Check the AWS Region that&#8217;s displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where you build the infrastructure. The template is launched in the {default_deployment_region} Region by default. For more information, see <a href="#_supported_aws_regions">Supported AWS Regions</a> earlier in this guide.</p>
+<p>Check the AWS Region that&#8217;s displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where you build the infrastructure. For more information, see <a href="#_supported_aws_regions">Supported AWS Regions</a> earlier in this guide.</p>
 </li>
 <li>
 <p>On the <strong>Create stack</strong> page, keep the default setting for the template URL, and then choose <strong>Next</strong>.</p>
@@ -1248,7 +1248,24 @@ This will deploy Neo4j Enterprise into the default VPC.  This Quick Start does n
 <h2 id="_best_practices_for_using_neo4j_enterprise_on_aws">Best practices for using Neo4j Enterprise on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For best practices please visit <a href="https://neo4j.com/blog/8-tips-succeeding-with-neo4j/" class="bare">https://neo4j.com/blog/8-tips-succeeding-with-neo4j/</a></p>
+<p>Backups and restore best practices:<br>
+<a href="https://neo4j.com/docs/operations-manual/current/backup-restore/planning/" class="bare">https://neo4j.com/docs/operations-manual/current/backup-restore/planning/</a></p>
+</div>
+<div class="paragraph">
+<p>Security best practices go to:<br>
+<a href="https://neo4j.com/docs/operations-manual/current/security/" class="bare">https://neo4j.com/docs/operations-manual/current/security/</a></p>
+</div>
+<div class="paragraph">
+<p>Monitoring best practices:<br>
+<a href="https://neo4j.com/docs/operations-manual/current/monitoring/" class="bare">https://neo4j.com/docs/operations-manual/current/monitoring/</a></p>
+</div>
+<div class="paragraph">
+<p>Performance best practices:<br>
+<a href="https://neo4j.com/docs/operations-manual/current/performance/" class="bare">https://neo4j.com/docs/operations-manual/current/performance/</a></p>
+</div>
+<div class="paragraph">
+<p>General best practices:
+<a href="https://neo4j.com/blog/8-tips-succeeding-with-neo4j/" class="bare">https://neo4j.com/blog/8-tips-succeeding-with-neo4j/</a></p>
 </div>
 </div>
 </div>
@@ -1256,19 +1273,8 @@ This will deploy Neo4j Enterprise into the default VPC.  This Quick Start does n
 <h2 id="_other_useful_information">Other useful information</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This quickstart creates a security group with the following ports open:<br>
-Port 22:  SSH<br>
-Port 7474:  HTTP<br>
-Port 7473:  HTTPS<br>
-Port 7687:  Bolt<br>
-Port 5000:  Causal Cluster discovery management<br>
-Port 6000:  Causal Cluster transaction<br>
-Port 7000:  Causal Cluster RAFT<br>
-Port 7688:  Causal Cluster routing connector<br>
-Port 2003:  Graphite monitoring<br>
-Port 2004:  Prometheus monitoring<br>
-Port 3637:  JMX monitoring<br>
-Port 5005:  Remote debugging</p>
+<p>For a list of ports that are opened by this quickstart please visit:<br>
+<a href="https://neo4j.com/docs/operations-manual/4.4/configuration/ports/" class="bare">https://neo4j.com/docs/operations-manual/4.4/configuration/ports/</a></p>
 </div>
 </div>
 </div>

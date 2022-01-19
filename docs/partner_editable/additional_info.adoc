@@ -26,8 +26,20 @@ image:../images/return_gds_version.png[Return GDS Version]
 
 == Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
-To backup the Neo4j graph DB information please snapshot
-For best practices please visit https://neo4j.com/blog/8-tips-succeeding-with-neo4j/
+Backups and restore best practices: +
+https://neo4j.com/docs/operations-manual/current/backup-restore/planning/
+
+Security best practices go to: +
+https://neo4j.com/docs/operations-manual/current/security/
+
+Monitoring best practices: +
+https://neo4j.com/docs/operations-manual/current/monitoring/
+
+Performance best practices: +
+https://neo4j.com/docs/operations-manual/current/performance/
+
+General best practices: +
+https://neo4j.com/blog/8-tips-succeeding-with-neo4j/
 
 == Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
