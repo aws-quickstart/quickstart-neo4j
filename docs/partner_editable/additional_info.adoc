@@ -26,25 +26,15 @@ image:../images/return_gds_version.png[Return GDS Version]
 
 == Best practices for using {partner-product-short-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
-
+To backup the Neo4j graph DB information please snapshot
 For best practices please visit https://neo4j.com/blog/8-tips-succeeding-with-neo4j/
 
 == Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
 
-This quickstart creates a security group with the following ports open: +
-Port 22:  SSH +
-Port 7474:  HTTP +
-Port 7473:  HTTPS +
-Port 7687:  Bolt +
-Port 5000:  Causal Cluster discovery management +
-Port 6000:  Causal Cluster transaction +
-Port 7000:  Causal Cluster RAFT +
-Port 7688:  Causal Cluster routing connector +
-Port 2003:  Graphite monitoring +
-Port 2004:  Prometheus monitoring +
-Port 3637:  JMX monitoring +
-Port 5005:  Remote debugging
+For a list of ports that are opened by this quickstart please visit: +
+https://neo4j.com/docs/operations-manual/4.4/configuration/ports/
+
 
 
 
