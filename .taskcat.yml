@@ -10,17 +10,3 @@ tests:
       QSS3KeyPrefix: quickstart-neo4j/
     regions:
     - us-east-2
-  # neo4j-multi-region:
-  #   parameters:
-  #     AvailabilityZones: $[taskcat_genaz_3]
-  #     QSS3BucketName: $[taskcat_autobucket]
-  #     QSS3BucketRegion: $[taskcat_current_region]
-  #     QSS3KeyPrefix: quickstart-neo4j/
-  #   regions:
-  #   - us-east-2
-  #   - us-west-1
-  #   - us-west-2
-  #   - ca-central-1
-  #   - eu-central-1
-  #   - ap-southeast-1
-  #   - sa-east-1
