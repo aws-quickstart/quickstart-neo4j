@@ -1,6 +1,6 @@
 :xrefstyle: short
 
-Deploying this Quick Start for a new virtual private cloud (VPC) with
+Deploying this Quick Start for the default virtual private cloud (VPC) with
 default parameters builds the following {partner-product-short-name} environment in the
 AWS Cloud.
 
@@ -8,12 +8,11 @@ AWS Cloud.
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../images/neo4j_architecture_diagram.png[Architecture]
+image::../deployment_guide/images/architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
 * A highly available architecture that spans three Availability Zones.
 * In the public subnets:
-** Linux EC2 instances in an Auto Scaling Group
+** Amazon Linux EC2 instances with Neo4j Enterprise installed and configured in an Auto Scaling Group
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are also represented in the architecture diagram. End each bullet with a period.
-

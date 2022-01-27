@@ -1,0 +1,5 @@
+//Include any pre-deployment steps here, such as signing up for a Marketplace AMI or making any changes to a Partner account. If there are none leave this file empty.
+
+== Pre deployment steps
+
+Make sure that you are in the correct region with default VPC in which you wish to deploy the Neo4j Enterprise solution.

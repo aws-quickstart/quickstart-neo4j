@@ -1,0 +1,35 @@
+// Add steps as necessary for accessing the software, post-configuration, and testing. Don’t include full usage instructions for your software, but add links to your product documentation for that information.
+//Should any sections not be applicable, remove them
+
+=== Test the deployment
+After the cluster has started, it is possible to connect to any of the instances and run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster: +
+
+image:../images/dbms_cluster_overview.png[DBMS Cluster Overview]
+
+To verify your installation, the library version can be printed by entering into the browser in Neo4j Desktop and calling the gds.version() function:
+
+image:../images/return_gds_version.png[Return GDS Version]
+
+
+=== Best practices for using {partner-product-short-name} on AWS
+// Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
+https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backups and restore best practices]
+
+https://neo4j.com/docs/operations-manual/current/security/[Security best practices]
+
+https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring best practices]
+
+https://neo4j.com/docs/operations-manual/current/performance/[Performance best practices]
+
+https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices]
+
+=== Other useful information
+//Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
+
+https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[For a list of ports that are opened by this quickstart please visit]
+
+
+
+
+
+
