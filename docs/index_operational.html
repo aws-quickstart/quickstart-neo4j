@@ -936,7 +936,19 @@ report bugs, or submit feature ideas for this Quick Start, see the <a href="#_fe
 <div class="sect2">
 <h3 id="_other_useful_information">Other useful information</h3>
 <div class="paragraph">
-<p><a href="https://neo4j.com/docs/operations-manual/4.4/configuration/ports/">For a list of ports that are opened by this quickstart please visit</a></p>
+<p><a href="https://neo4j.com/docs/operations-manual/4.4/configuration/ports/">Overview of the Neo4j Enterprise-specific ports</a></p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Note that this Quick Start deploys in the default VPC in a public subnet to give better user experience in getting started with Neo4j Enterprise. If you are deploying this Quick Start in production environment, you may want to consider using a private subnet. But that limits how you access the Neo4j Enterprise browser and driver over public internet. In that case, you need to use <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html">VPN</a> to access the Neo4j Enterprise browser and driver. If you want to see the Quick Start deployed to private subnet or other deployment model you can create feature request via github issues on the Quick Start <a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/" target="_blank" rel="noopener">GitHub repository</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

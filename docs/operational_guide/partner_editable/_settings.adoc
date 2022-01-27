@@ -3,7 +3,7 @@
 :partner-product-name: Neo4j Enterprise
 :partner-product-short-name: Neo4j Enterprise
 :partner-company-name: Neo4j
-:doc-month: January
+:doc-month: February
 :doc-year: 2022
 :partner-contributors: Ben Lackey, {partner-company-name}
 :aws-contributors: Antony Prasad, AWS Data & Analytics Partner team

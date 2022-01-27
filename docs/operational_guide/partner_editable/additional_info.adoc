@@ -26,7 +26,9 @@ https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices]
 === Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
 
-https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[For a list of ports that are opened by this quickstart please visit]
+https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Overview of the {partner-product-short-name}-specific ports]
+
+CAUTION: Note that this Quick Start deploys in the default VPC in a public subnet to give better user experience in getting started with {partner-product-short-name}. If you are deploying this Quick Start in production environment, you may want to consider using a private subnet. But that limits how you access the {partner-product-short-name} browser and driver over public internet. In that case, you need to use https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html[VPN] to access the {partner-product-short-name} browser and driver. If you want to see the Quick Start deployed to private subnet or other deployment model you can create feature request via github issues on the Quick Start https://github.com/{quickstart-github-org}/{quickstart-project-name}/issues/[GitHub repository^].
 
 
 
