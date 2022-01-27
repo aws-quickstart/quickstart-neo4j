@@ -1,0 +1,12 @@
+//Include any post-deployment steps here, such as steps necessary to test that the deployment was successful. If there are no post-deployment steps leave this file empty.
+
+== Post deployment steps
+To verify that your deployment worked go to *\http://<your server>:7474* OR *\https://<your server>:7473* and verify that you have a logon page.  *Replace your server with either the PUBLIC IP address or DNS name of your server.*
+
+image::../images/neo4j_login.png[Login Page]
+
+You will login with the username *neo4j* and the password you supplied during the deployment. After you login you will see: +
+
+This quickstart deploys three nodes.  You can connect to any of the nodes made available.  If a node goes down you can connect to a different node and use the web interface on that node.
+
+image::../images/neo4j_main.png[Main Page]

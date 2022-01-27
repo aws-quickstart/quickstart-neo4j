@@ -1,5 +1,0 @@
-// Edit this placeholder text to accurately describe your architecture.
-
-* *This deploys {partner-product-short-name} into the default VPC*. +
-This quickstart also deploys instances in multiple AZs with an autoscaling group, a security group and an IAM role.
-

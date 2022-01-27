@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.16">
-<meta name="description" content="Neo4j Enterprise Deployment Guide on AWS">
+<meta name="description" content="Neo4j Enterprise Operational Guide on AWS">
 <meta name="keywords" content="Quick Start, AWS, Neo4j Enterprise">
-<title>Neo4j Enterprise on the AWS Cloud</title>
+<title>Neo4j Enterprise on the AWS Cloud - Operational Guide</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment @import statement to use as custom stylesheet */
@@ -835,13 +835,13 @@ p.footer-text a{color:#d7d8d8}
 <div id="toctitle"></div>
 <ul class="sectlevel1">
 <li><a href="#_overview">Overview</a></li>
-<li><a href="#_costs_and_licenses">Costs and licenses</a></li>
-<li><a href="#_architecture">Architecture</a></li>
-<li><a href="#_deployment_options">Deployment options</a></li>
-<li><a href="#_pre_deployment_steps">Pre deployment steps</a></li>
-<li><a href="#_deployment_steps">Deployment steps</a></li>
-<li><a href="#_post_deployment_steps">Post deployment steps</a></li>
-<li><a href="#_troubleshooting">Troubleshooting</a></li>
+<li><a href="#_additional_information">Additional Information</a>
+<ul class="sectlevel2">
+<li><a href="#_test_the_deployment">Test the deployment</a></li>
+<li><a href="#_best_practices_for_using_neo4j_enterprise_on_aws">Best practices for using Neo4j Enterprise on AWS</a></li>
+<li><a href="#_other_useful_information">Other useful information</a></li>
+</ul>
+</li>
 <li><a href="#_feedback">Feedback</a></li>
 <li><a href="#_notices">Notices</a></li>
 </ul>
@@ -850,16 +850,16 @@ p.footer-text a{color:#d7d8d8}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<h2 id="_neo4j_enterprise_on_the_aws_cloud" class="discrete text-center">Neo4j Enterprise on the AWS Cloud</h2>
-<h2 id="_quick_start_reference_deployment" class="discrete text-left text-center">Quick Start Reference Deployment</h2>
+<h2 id="_neo4j_enterprise_on_the_aws_cloud_operational_guide" class="discrete text-center">Neo4j Enterprise on the AWS Cloud - Operational Guide</h2>
+<h2 id="_quick_start_operational_guide" class="discrete text-left text-center">Quick Start Operational Guide</h2>
 <div class="imageblock text-center">
 <div class="content">
-<img src="https://aws-quickstart.s3.amazonaws.com/docs/deployment-guide/aws-quickstart-deployment-graphic.png" alt="QS" width="80" height="80">
+<img src="https://aws-quickstart.s3.amazonaws.com/docs/operational-guide/aws-quickstart-operational-graphic.png" alt="QS" width="80" height="80">
 </div>
 </div>
 <div class="imageblock image-container">
 <div class="content">
-<img src="https://aws-quickstart.s3.amazonaws.com/quickstart-neo4j/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="">
+<img src="https://aws-quickstart.s3.amazonaws.com/quickstart-neo4j/docs/boilerplate/.images/aws-quickstart-operational-graphic.png" alt="">
 </div>
 </div>
 <div class="paragraph text-center">
@@ -890,181 +890,66 @@ report bugs, or submit feature ideas for this Quick Start, see the <a href="#_fe
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This Quick Start deploys Neo4j Enterprise on the AWS Cloud. If you are unfamiliar with AWS Quick Starts we recommend that you read the <a href="https://aws-ia.github.io/content/qs_info.html">AWS Quick Start General Content Guide</a>.</p>
+<p>Neo4j is an open-source, NoSQL, native graph database that provides an ACID-compliant transactional backend for your applications that has been publicly available since 2007.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start is for users who wish to deploy and use the Neo4j Enterprise products.</p>
-</div>
-<div class="paragraph">
-<p>This deployment guide covers the steps necessary to deploy the Quick Start. For more advanced information on the product, troubleshooting, or additional functionality, see the <a href="https://aws-quickstart.github.io/quickstart-neo4j/index_operational.html">Operational guide</a>.</p>
+<p>Neo4j is offered as a managed service via AuraDB. But you can also run Neo4j yourself with either Community Edition or Enterprise Edition. The Enterprise Edition includes all that Community Edition has to offer, plus extra enterprise requirements such as backups, clustering, and failover abilities. Neo4j is written in Java and Scala, and the source code is available on <a href="https://github.com/neo4j" target="_blank"">GitHub</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_costs_and_licenses">Costs and licenses</h2>
+<h2 id="_additional_information">Additional Information</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_test_the_deployment">Test the deployment</h3>
 <div class="paragraph">
-<p>This Quick Start requires a license for Neo4j Enterprise. To use the Quick Start in your production environment, sign up for a license at <a href="https://neo4j.com/licensing/">Neo4j Enterprise Licensing</a>. Information about the trial license is located at <a href="https://neo4j.com/terms/enterprise_us">Neo4j Enterprise Trial License Terms</a></p>
-</div>
-<div class="paragraph">
-<p>There is no cost to use this Quick Start, however you will be billed for the resources deployed. For more information see the <a href="https://aws-ia.github.io/content/qs_info.html">AWS Quick Start General Content Guide</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_architecture">Architecture</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Deploying this Quick Start for the default virtual private cloud (VPC) with
-default parameters builds the following Neo4j Enterprise environment in the
-AWS Cloud.</p>
-</div>
-<div id="architecture1" class="imageblock">
-<div class="content">
-<img src="deployment_guide/images/architecture_diagram.png" alt="Architecture">
-</div>
-<div class="title">Figure 1. Quick Start architecture for Neo4j Enterprise on AWS</div>
+<p>After the cluster has started, it is possible to connect to any of the instances and run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster:<br></p>
 </div>
 <div class="paragraph">
-<p>As shown in <a href="#architecture1">Figure 1</a>, the Quick Start sets up the following:</p>
+<p><span class="image"><img src="images/dbms_cluster_overview.png" alt="DBMS Cluster Overview"></span></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>A highly available architecture that spans three Availability Zones.</p>
-</li>
-<li>
-<p>In the public subnets:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Amazon Linux EC2 instances with Neo4j Enterprise installed and configured in an Auto Scaling Group</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>To verify your installation, the library version can be printed by entering into the browser in Neo4j Desktop and calling the gds.version() function:</p>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p><span class="image"><img src="images/return_gds_version.png" alt="Return GDS Version"></span></p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_best_practices_for_using_neo4j_enterprise_on_aws">Best practices for using Neo4j Enterprise on AWS</h3>
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/backup-restore/planning/">Backups and restore best practices</a></p>
 </div>
-<div class="sect1">
-<h2 id="_deployment_options">Deployment options</h2>
-<div class="sectionbody">
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/security/">Security best practices</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/monitoring/">Monitoring best practices</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/performance/">Performance best practices</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://neo4j.com/blog/8-tips-succeeding-with-neo4j/">General best practices</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_useful_information">Other useful information</h3>
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/4.4/configuration/ports/">Overview of the Neo4j Enterprise-specific ports</a></p>
+</div>
+<div class="admonitionblock caution">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-caution" title="Caution"></i>
 </td>
 <td class="content">
-This will deploy Neo4j Enterprise into the default VPC.  This Quick Start does not support <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html" target="_blank" rel="noopener">shared subnets</a>.
+Note that this Quick Start deploys in the default VPC in a public subnet to give better user experience in getting started with Neo4j Enterprise. If you are deploying this Quick Start in production environment, you may want to consider using a private subnet. But that limits how you access the Neo4j Enterprise browser and driver over public internet. In that case, you need to use <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html">VPN</a> to access the Neo4j Enterprise browser and driver. If you want to see the Quick Start deployed to private subnet or other deployment model you can create feature request via github issues on the Quick Start <a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/" target="_blank" rel="noopener">GitHub repository</a>.
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>The Quick Start deployment takes about 5 minutes to complete:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://qs_launch_permalink">Deploy Neo4j Enterprise into the default VPC</a>. This option provisions Neo4j Enterprise in your existing AWS infrastructure.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This quickstart deploys Neo4j Enterprise instances in multiple AZs with an autoscaling group, security groups neccessary to access Neo4j Enterprise from internet and block unnecessary ports to intra-cluster communication only, an IAM role and settings to enabled causual clustering of Neo4j Enterprise .</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 75%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_launch_permalink" target="_blank" rel="noopener">Deploy Neo4j Enterprise into the default VPC on AWS</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="http://qs_template_permalink" target="_blank" rel="noopener">View template</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_pre_deployment_steps">Pre deployment steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Make sure that you are in the correct region with default VPC in which you wish to deploy the Neo4j Enterprise solution.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deployment_steps">Deployment steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>After clicking the <strong>Deploy</strong> link on the Quick Start landing page, you will be brought to the <a href="https://console.aws.amazon.com/cloudformation">CloudFormation console</a>, with the template URL pre-populated. Ensure you are in the correct Region and click <strong>Next</strong> to enter parameter values.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you finish, choose <strong>Next</strong>.</p>
-</li>
-<li>
-<p>On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.</p>
-</li>
-<li>
-<p>Choose <strong>Create stack</strong> to deploy the stack.</p>
-</li>
-<li>
-<p>Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the Neo4j Enterprise deployment is ready.</p>
-</li>
-<li>
-<p>To view the created resources, see the values displayed in the <strong>Outputs</strong> tab for the stack.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_post_deployment_steps">Post deployment steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To verify that your deployment worked go to <strong>http://&lt;your server&gt;:7474</strong> OR <strong>https://&lt;your server&gt;:7473</strong> and verify that you have a logon page.  <strong>Replace your server with either the PUBLIC IP address or DNS name of your server.</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/neo4j_login.png" alt="Login Page">
-</div>
-</div>
-<div class="paragraph">
-<p>You will login with the username <strong>neo4j</strong> and the password you supplied during the deployment. After you login you will see:<br></p>
-</div>
-<div class="paragraph">
-<p>This quickstart deploys three nodes.  You can connect to any of the nodes made available.  If a node goes down you can connect to a different node and use the web interface on that node.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/neo4j_main.png" alt="Main Page">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting">Troubleshooting</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For troubleshooting common Quick Start issues visit the <a href="https://aws-ia.github.io/content/qs_info.html">AWS Quick Start General Content Guide</a> or the <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html">Troubleshooting CloudFormation</a> page in the AWS documentation.</p>
 </div>
 </div>
 </div>
