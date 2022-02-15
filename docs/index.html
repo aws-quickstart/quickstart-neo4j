@@ -840,9 +840,14 @@ p.footer-text a{color:#d7d8d8}
 <li><a href="#_deployment_options">Deployment options</a></li>
 <li><a href="#_pre_deployment_steps">Pre deployment steps</a></li>
 <li><a href="#_deployment_steps">Deployment steps</a></li>
-<li><a href="#_post_deployment_steps">Post deployment steps</a></li>
+<li><a href="#_post_deployment_steps">Post deployment steps</a>
+<ul class="sectlevel2">
+<li><a href="#_additional_information">Additional Information</a></li>
+</ul>
+</li>
+<li><a href="#_test_the_deployment">Test the deployment</a></li>
 <li><a href="#_troubleshooting">Troubleshooting</a></li>
-<li><a href="#_feedback">Feedback</a></li>
+<li><a href="#_feedback_on_this_guide">Feedback on this guide</a></li>
 <li><a href="#_notices">Notices</a></li>
 </ul>
 </div>
@@ -865,8 +870,8 @@ p.footer-text a{color:#d7d8d8}
 <div class="paragraph text-center">
 <p><strong>February 2022</strong><br>
 <em>Ben Lackey, Neo4j</em><br>
-<em>Suresh Veeragoni, AWS Integration &amp; Automation team</em><br>
-<em>Antony Prasad, AWS Data &amp; Analytics Partner team</em><br></p>
+<em>Antony Prasad, AWS Data &amp; Analytics Partner team</em><br>
+<em>Suresh Veeragoni, AWS Integration &amp; Automation team</em><br></p>
 </div>
 <div class="admonitionblock tip text-left">
 <table>
@@ -875,8 +880,7 @@ p.footer-text a{color:#d7d8d8}
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Visit our <a href="https://github.com/aws-quickstart/quickstart-neo4j" target="_blank" rel="noopener">GitHub repository</a> to view source files. To post feedback,
-report bugs, or submit feature ideas for this Quick Start, see the <a href="#_feedback">feedback</a> section of the guide.
+Visit our <a href="https://github.com/aws-quickstart/quickstart-neo4j" target="_blank" rel="noopener">GitHub repository</a> to view source files, report bugs, submit feature ideas, or post other feedback on this Quick Start. To comment on the documentation, see <a href="#_feedback_on_this_guide">Feedback on this guide</a>.
 </td>
 </tr>
 </table>
@@ -894,9 +898,6 @@ report bugs, or submit feature ideas for this Quick Start, see the <a href="#_fe
 </div>
 <div class="paragraph">
 <p>This Quick Start is for users who wish to deploy and use the Neo4j Enterprise products.</p>
-</div>
-<div class="paragraph">
-<p>This deployment guide covers the steps necessary to deploy the Quick Start. For more advanced information on the product, troubleshooting, or additional functionality, see the <a href="https://aws-quickstart.github.io/quickstart-neo4j/index_operational.html">Operational guide</a>.</p>
 </div>
 </div>
 </div>
@@ -938,7 +939,13 @@ AWS Cloud.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Amazon Linux EC2 instances with Neo4j Enterprise installed and configured in an Auto Scaling Group</p>
+<p>Amazon Linux EC2 instances with Neo4j Enterprise installed and configured for external access in an Auto Scaling Group</p>
+</li>
+<li>
+<p>Amazon Elastic Block Storage (Amazon EBS) GP3 volumes for the Neo4j database storage</p>
+</li>
+<li>
+<p>The public subnet comes with managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets along with Internet Gateway</p>
 </li>
 </ul>
 </div>
@@ -973,7 +980,7 @@ This will deploy Neo4j Enterprise into the default VPC.  This Quick Start does n
 </ul>
 </div>
 <div class="paragraph">
-<p>This quickstart deploys Neo4j Enterprise instances in multiple AZs with an autoscaling group, security groups neccessary to access Neo4j Enterprise from internet and block unnecessary ports to intra-cluster communication only, an IAM role and settings to enabled causual clustering of Neo4j Enterprise .</p>
+<p>The Quick Start provides one template. In the template, you can configure various parameters.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1039,24 +1046,68 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <div class="sect1">
 <h2 id="_post_deployment_steps">Post deployment steps</h2>
 <div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>This quickstart deploys three EC2 nodes. You can connect to any of the nodes made available from EC2 console using a web browser. If a node goes down you can connect to a different node and use the web interface on that node.</p>
+</li>
+<li>
+<p>To verify that your deployment worked go to <strong>http://&lt;your server&gt;:7474</strong> OR <strong>https://&lt;your server&gt;:7473</strong> in your web browser and verify that you have a logon page.  <strong>Replace your server with either the PUBLIC IP address or DNS name of your EC2 instance from AWS Console.</strong></p>
+</li>
+<li>
+<p>You will login with the username <strong>neo4j</strong> and the password you supplied during the deployment.<br></p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_additional_information">Additional Information</h3>
 <div class="paragraph">
-<p>To verify that your deployment worked go to <strong>http://&lt;your server&gt;:7474</strong> OR <strong>https://&lt;your server&gt;:7473</strong> and verify that you have a logon page.  <strong>Replace your server with either the PUBLIC IP address or DNS name of your server.</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/neo4j_login.png" alt="Login Page">
-</div>
+<p><a href="https://neo4j.com/docs/operations-manual/4.4/configuration/ports/">Overview of the Neo4j Enterprise-specific ports</a>.</p>
 </div>
 <div class="paragraph">
-<p>You will login with the username <strong>neo4j</strong> and the password you supplied during the deployment. After you login you will see:<br></p>
+<p><a href="https://neo4j.com/docs/operations-manual/current/backup-restore/planning/">Backups and restore best practices</a></p>
 </div>
 <div class="paragraph">
-<p>This quickstart deploys three nodes.  You can connect to any of the nodes made available.  If a node goes down you can connect to a different node and use the web interface on that node.</p>
+<p><a href="https://neo4j.com/docs/operations-manual/current/security/">Security best practices</a></p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="images/neo4j_main.png" alt="Main Page">
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/monitoring/">Monitoring best practices</a></p>
 </div>
+<div class="paragraph">
+<p><a href="https://neo4j.com/docs/operations-manual/current/performance/">Performance best practices</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://neo4j.com/blog/8-tips-succeeding-with-neo4j/">General best practices</a></p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Note that this Quick Start deploys in the default VPC in a public subnet to give better user experience in getting started with Neo4j Enterprise. If you are deploying this Quick Start in production environment, you may want to consider using a private subnet. But that limits how you access the Neo4j Enterprise browser and driver over public internet. In that case, you need to use <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html">VPN</a> to access the Neo4j Enterprise browser and driver. If you want to see the Quick Start deployed to private subnet or other deployment model you can create feature request via github issues on the Quick Start <a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/" target="_blank" rel="noopener">GitHub repository</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_the_deployment">Test the deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After connecting to any of the instances from the cluster you can run CALL dbms.cluster.overview() to check the status of the cluster. This shows information about each member of the cluster:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/dbms_cluster_overview.png" alt="DBMS Cluster Overview"></span></p>
+</div>
+<div class="paragraph">
+<p>To verify your installation, the library version can be printed by entering into the browser in Neo4j Desktop and calling the gds.version() function:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/return_gds_version.png" alt="Return GDS Version"></span></p>
 </div>
 </div>
 </div>
@@ -1066,13 +1117,16 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <div class="paragraph">
 <p>For troubleshooting common Quick Start issues visit the <a href="https://aws-ia.github.io/content/qs_info.html">AWS Quick Start General Content Guide</a> or the <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html">Troubleshooting CloudFormation</a> page in the AWS documentation.</p>
 </div>
+<div class="paragraph">
+<p>After you successfully deploy a Quick Start, confirm that your resources and services are updated and configured — including any required patches — to meet your security and other needs. For more information, see the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/">AWS Shared Responsibility Model</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_feedback">Feedback</h2>
+<h2 id="_feedback_on_this_guide">Feedback on this guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For submitting any issues on the Deployment Guide Documentation, please see here:</p>
+<p>To comment on this guide, open a GitHub issue as follows:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1080,13 +1134,13 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,grammar+or+spelling&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Grammar or spelling</a></p>
 </li>
 <li>
-<p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,broken+link&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Broken Link</a></p>
+<p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,broken+link&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Broken link</a></p>
 </li>
 <li>
 <p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,inaccurate+content&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Inaccurate content</a></p>
 </li>
 <li>
-<p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,display+and+design&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Display and design</a></p>
+<p><a href="https://github.com/aws-quickstart/quickstart-neo4j/issues/new?labels=documentation,display+and+design&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Display or design</a></p>
 </li>
 </ul>
 </div>

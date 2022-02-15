@@ -14,5 +14,8 @@ As shown in <<architecture1>>, the Quick Start sets up the following:
 
 * A highly available architecture that spans three Availability Zones.
 * In the public subnets:
-** Amazon Linux EC2 instances with Neo4j Enterprise installed and configured in an Auto Scaling Group
+** Amazon Linux EC2 instances with Neo4j Enterprise installed and configured for external access in an Auto Scaling Group
+** Amazon Elastic Block Storage (Amazon EBS) GP3 volumes for the Neo4j database storage
+** The public subnet comes with managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets along with Internet Gateway
+
 // Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are also represented in the architecture diagram. End each bullet with a period.
