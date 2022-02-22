@@ -1,18 +1,26 @@
 :xrefstyle: short
 
-Deploying this Quick Start for the default virtual private cloud (VPC) with
-default parameters builds the following {partner-product-short-name} environment in the
+Deploying this Quick Start with default parameters builds the following {partner-product-short-name} environment in the
 AWS Cloud.
-
-// Replace this example diagram with your own. Follow our wiki guidelines: https://w.amazon.com/bin/view/AWS_Quick_Starts/Process_for_PSAs/#HPrepareyourarchitecturediagram. Upload your source PowerPoint file to the GitHub {deployment name}/docs/images/ directory in this repo. 
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../deployment_guide/images/architecture_diagram.png[Architecture]
+image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
 * A highly available architecture that spans three Availability Zones.
 * In the public subnets:
-** Amazon Linux EC2 instances with Neo4j Enterprise installed and configured in an Auto Scaling Group
-// Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are also represented in the architecture diagram. End each bullet with a period.
+** Managed network address translation (NAT) gateways in all three Availability Zones to allow outbound internet access for resources in the private subnets.
+** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. In Availability Zone 1, the instance is the Neo4j leader, which bears the responsibility for imposing order on Raft log entries and driving the log forward with respect to the followers. In Availability Zones 2 and 3, the instances are Neo4j followers, which maintain their logs with respect to the current leader’s log.
+** Amazon Elastic Block Storage (Amazon EBS) gp3 volumes in all three Availability Zones for the Neo4j database storage.
+
+WARNING: This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
+
+NOTE: By default, to give users a better experience when getting started with {partner-product-short-name}, this Quick Start deploys in a public subnet. If you're deploying this Quick Start in a production environment, consider using a private subnet. A private subnet limits how you access the {partner-product-short-name} browser and application over the public internet. For information on accessing the {partner-product-short-name} browser and application, refer to https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html[Connect your VPC to remote networks^].
+
+//TODO Suresh, We say "browser" and "application" elsewhere, and we don't use the term "driver" anywhere else. So I swapped in "application" in this note. Is that accurate? Or do we need to revert to "driver" here?
+
+//TODO Suresh, Please fill in the blanks above.
+
+//TODO Suresh, Which components comprise the "database management system (DBMS) cluster" that we refer to later? We should clarify this here.

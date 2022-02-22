@@ -1,17 +1,5 @@
-// Edit this placeholder text to accurately describe your architecture.
+This Quick Start provides one deployment option:
 
-WARNING: This will deploy {partner-product-short-name} into the default VPC.  This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
+* https://fwd.aws/yrMqD?[Deploy {partner-product-short-name} into your default VPC^]. This option provisions {partner-product-name} in your existing AWS infrastructure.
 
-The Quick Start deployment takes about {deployment_time} to complete:
-
-
-* http://qs_launch_permalink[Deploy {partner-product-short-name} into the default VPC]. This option provisions {partner-product-short-name} in your existing AWS infrastructure.
-
-This quickstart deploys {partner-product-short-name} instances in multiple AZs with an autoscaling group, security groups neccessary to access {partner-product-short-name} from internet and block unnecessary ports to intra-cluster communication only, an IAM role and settings to enabled causual clustering of {partner-product-short-name} .
-
-[cols="3,1"]
-|===
-^|http://qs_launch_permalink[Deploy {partner-product-short-name} into the default VPC on AWS^]
-^|http://qs_template_permalink[View template^]
-
-|===
+The Quick Start provides one template, in which you can configure various parameters.
