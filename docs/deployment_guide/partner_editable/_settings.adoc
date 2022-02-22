@@ -1,7 +1,7 @@
 :quickstart-project-name: quickstart-neo4j
 :quickstart-github-org: aws-quickstart
-:partner-product-name: Neo4j Enterprise
-:partner-product-short-name: Neo4j Enterprise
+:partner-product-name: Neo4j Enterprise Edition
+:partner-product-short-name: Neo4j
 :partner-company-name: Neo4j
 :doc-month: February
 :doc-year: 2022
@@ -9,5 +9,5 @@
 :aws-contributors: Antony Prasad, AWS Data & Analytics Partner team
 :aws-ia-contributors: Suresh Veeragoni, AWS Integration & Automation team 
 :deployment_time: 5 minutes
-// :default_deployment_region: us-east-1
+:default_deployment_region: us-east-1
 // :private_repo:
