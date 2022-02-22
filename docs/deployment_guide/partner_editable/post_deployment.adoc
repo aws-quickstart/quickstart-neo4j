@@ -14,36 +14,34 @@ image::../docs/deployment_guide/images/neo4j_main.png[neo4j-login]
 .Neo4j application main page
 image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
 
-. Run `CALL dbms.cluster.overview()` to check the status of the cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
+. Run `CALL dbms.cluster.overview()` to check the status of the DBMS cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
 +
 [#dbms-cluster-overview]
 .DBMS cluster overview
 image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
 
 . (Optional) Print the library version. 
-.. Open the Neo4j Browser.
-.. Run the `RETURN gds.version()` function, as shown in <<return-gds-version>>.
+.. Open Neo4j Browser.
+.. Run `RETURN gds.version()`, as shown in <<return-gds-version>>.
 +
 [#return-gds-version]
 .GDS version
 image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
 
-//TODO Suresh, I've consolidated and simplified these steps. Please confirm that they're clear, accurate, and complete. The last step definitely is not complete and may not even be accurate as I've edited it.
-
 == Additional information
 
-For Neo4j best practices and more, refer to the following sections in the Neo4j Operations Manual:
+* https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^] (blog post)
 
-* https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Ports^]
+* https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^], especially the following sections:
 
-* https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
+** https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Ports^]
 
-* https://neo4j.com/docs/operations-manual/current/security/[Security^]
+** https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
 
-* https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
+** https://neo4j.com/docs/operations-manual/current/security/[Security^]
 
-* https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
+** https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
 
-* https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices^]
+** https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
 
-Also refer to this blog post: https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^]
+** https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices^]

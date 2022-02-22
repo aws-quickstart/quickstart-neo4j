@@ -1,6 +1,6 @@
-# Neo4j Enterprise—Quick Start
+# Neo4j Enterprise Edition—Quick Start
 
-For architectural details, step-by-step instructions, and customization options, refer to the [deployment guide](https://aws-quickstart.github.io/quickstart-neo4j/).
+For architectural details, step-by-step instructions, and customization options, refer to the [deployment guide](https://fwd.aws/7bJeD?).
 
 To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo. 
 
