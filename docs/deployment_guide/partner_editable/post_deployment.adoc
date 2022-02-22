@@ -21,7 +21,7 @@ image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
 image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
 
 . (Optional) Print the library version. 
-.. Open the browser in Neo4j Desktop.
+.. Open the Neo4j Browser.
 .. Run the `RETURN gds.version()` function, as shown in <<return-gds-version>>.
 +
 [#return-gds-version]
