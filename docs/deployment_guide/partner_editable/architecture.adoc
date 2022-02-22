@@ -12,7 +12,7 @@ As shown in <<architecture1>>, the Quick Start sets up the following:
 * A highly available architecture that spans three Availability Zones.
 * In the public subnets:
 ** Managed network address translation (NAT) gateways in all three Availability Zones to allow outbound internet access for resources in the private subnets.
-** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. In Availability Zone 1, the instance is the Neo4j leader, which [ _ _ _ _ _ ]. In Availability Zones 2 and 3, the instances are Neo4j followers, which [ _ _ _ _ _ ].
+** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. In Availability Zone 1, the instance is the Neo4j leader, which bears the responsibility for imposing order on Raft log entries and driving the log forward with respect to the followers. In Availability Zones 2 and 3, the instances are Neo4j followers, which maintain their logs with respect to the current leader’s log.
 ** Amazon Elastic Block Storage (Amazon EBS) gp3 volumes in all three Availability Zones for the Neo4j database storage.
 
 WARNING: This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
