@@ -1,5 +1,5 @@
-This Quick Start deploys {partner-product-name} on the AWS Cloud. {partner-product-short-name} is a transactional database management system for processing and storing graph data.
+This Quick Start deploys {partner-product-name} on the AWS Cloud. For more information about {partner-product-name} , refer to [_ _ _ _].
+
+// TODO Suresh, What URL shall we point to for a description of this specific product (Enterprise Edition)? I'm not finding a good page for this.
 
 If you are unfamiliar with AWS Quick Starts, refer to the https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide].
-
-// For information on using this Quick Start for migrations, see the https://{quickstart-github-org}.github.io/quickstart-project-name/index_migration.html[Migration guide].
