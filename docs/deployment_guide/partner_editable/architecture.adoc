@@ -9,7 +9,7 @@ image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architectu
 
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
-* A highly available architecture that spans three Availability Zones.
+* A highly available architecture that spans three Availability Zones  in your default virtual private cloud (VPC).
 * In the public subnets:
 ** Managed network address translation (NAT) gateways in all three Availability Zones to allow outbound internet access for resources in the private subnets.
 ** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances in all three Availability Zones with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. Within this database management system (DBMS) cluster, each instance has either a https://medium.com/neo4j/querying-neo4j-clusters-7d6fde75b5b4[leader or a follower role^].
