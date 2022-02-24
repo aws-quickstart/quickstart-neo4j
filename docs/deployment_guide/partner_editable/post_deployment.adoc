@@ -28,7 +28,7 @@ image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster ov
 .GDS version
 image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
 
-== Additional information
+== Learn more about Neo4j
 
 * https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^] (blog post)
 
