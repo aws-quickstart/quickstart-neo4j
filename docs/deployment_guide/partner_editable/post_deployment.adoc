@@ -1,4 +1,6 @@
-== Test the deployment
+== Postdeployment steps
+
+Test the deployment as follows:
 
 . Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and connect to any of the three deployed EC2 instances.
 
@@ -28,7 +30,7 @@ image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster ov
 .GDS version
 image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
 
-== Learn more about Neo4j
+== Resources
 
 * https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^] (blog post)
 
