@@ -1,5 +1,7 @@
 :xrefstyle: short
 
+WARNING: This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
+
 Deploying this Quick Start with default parameters builds the following {partner-product-short-name} environment in the
 AWS Cloud.
 
@@ -10,11 +12,9 @@ image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architectu
 As shown in <<architecture1>>, the Quick Start sets up the following:
 
 * A highly available architecture that spans three Availability Zones  in your default virtual private cloud (VPC).
-* In the public subnets:
+* In the public subnets:*
 ** Managed network address translation (NAT) gateways in all three Availability Zones to allow outbound internet access for resources in the private subnets.
-** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances in all three Availability Zones with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. Within this database management system (DBMS) cluster, each instance has either a https://medium.com/neo4j/querying-neo4j-clusters-7d6fde75b5b4[leader or a follower role^].
+** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances in all three Availability Zones with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. Within this database management system (DBMS) cluster, each instance has either a leader or a follower https://medium.com/neo4j/querying-neo4j-clusters-7d6fde75b5b4[cluster role^].
 ** Amazon Elastic Block Storage (Amazon EBS) gp3 volumes in all three Availability Zones to store the Neo4j database.
 
-WARNING: This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
-
-NOTE: By default, to give users a better experience when getting started with {partner-product-short-name}, this Quick Start deploys in a public subnet. If you're deploying this Quick Start in a production environment, consider using a private subnet. A private subnet limits how you access the Neo4j application and Neo4j Browser over the public internet. For more information, refer to https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html[Connect your VPC to remote networks^].
+[.small]#* By default, to give users a better experience when getting started with {partner-product-short-name}, this Quick Start deploys in a public subnet. If you're deploying this Quick Start in a production environment, consider using a private subnet. A private subnet limits how you access the Neo4j application and Neo4j Browser over the public internet. For more information, refer to https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html[Connect your VPC to remote networks^].#
