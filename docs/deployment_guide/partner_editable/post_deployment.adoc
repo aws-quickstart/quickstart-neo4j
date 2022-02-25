@@ -1,12 +1,49 @@
-//Include any post-deployment steps here, such as steps necessary to test that the deployment was successful. If there are no post-deployment steps leave this file empty.
+== Test the deployment
 
-== Post deployment steps
-To verify that your deployment worked go to *\http://<your server>:7474* OR *\https://<your server>:7473* and verify that you have a logon page.  *Replace your server with either the PUBLIC IP address or DNS name of your server.*
+. Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and connect to any of the three deployed EC2 instances.
 
-image::../images/neo4j_login.png[Login Page]
+. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of with either the public IP address or DNS name of your EC2 instance. The login page appears, as shown in <<#neo4j-login>>.
++
+[#neo4j-login]
+.Neo4j login page
+image::../docs/deployment_guide/images/neo4j_main.png[neo4j-login]
 
-You will login with the username *neo4j* and the password you supplied during the deployment. After you login you will see: +
+. Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment. The main page appears, as shown in <<#neo4j-main-page>>.
++
+[#neo4j-main-page]
+.Neo4j application main page
+image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
 
-This quickstart deploys three nodes.  You can connect to any of the nodes made available.  If a node goes down you can connect to a different node and use the web interface on that node.
+. Run `CALL dbms.cluster.overview()` to check the status of the cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
++
+[#dbms-cluster-overview]
+.DBMS cluster overview
+image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
 
-image::../images/neo4j_main.png[Main Page]
+. (Optional) Print the library version. 
+.. Open the Neo4j Browser.
+.. Run the `RETURN gds.version()` function, as shown in <<return-gds-version>>.
++
+[#return-gds-version]
+.GDS version
+image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
+
+//TODO Suresh, I've consolidated and simplified these steps. Please confirm that they're clear, accurate, and complete. The last step definitely is not complete and may not even be accurate as I've edited it.
+
+== Additional information
+
+For Neo4j best practices and more, refer to the following sections in the Neo4j Operations Manual:
+
+* https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Ports^]
+
+* https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
+
+* https://neo4j.com/docs/operations-manual/current/security/[Security^]
+
+* https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
+
+* https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
+
+* https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices^]
+
+Also refer to this blog post: https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^]
