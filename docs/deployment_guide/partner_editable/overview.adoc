@@ -1,5 +1,1 @@
-This Quick Start deploys {partner-product-name} on the AWS Cloud. For more information about {partner-product-name} , refer to https://neo4j.com/developer/graph-database/#neo4j-overview/[Neo4j overview].
-
-// TODO Suresh, What URL shall we point to for a description of this specific product (Enterprise Edition)? I'm not finding a good page for this.
-
-If you are unfamiliar with AWS Quick Starts, refer to the https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide].
+This Quick Start deploys https://neo4j.com/developer/graph-database/#neo4j-overview[{partner-product-name}^] on the AWS Cloud. If you are unfamiliar with AWS Quick Starts, refer to the https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide].

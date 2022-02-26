@@ -6,7 +6,7 @@ Metadata:
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
       - Label: 
-          default: "Neo4j Configuration"
+          default: "Neo4j configuration"
         Parameters: 
           - GraphDatabaseVersion
           - GraphDataScienceVersion
@@ -14,7 +14,7 @@ Metadata:
           - Password
           - LicenseKey
       - Label: 
-          default: "Infrastructure Configuration"
+          default: "Infrastructure configuration"
         Parameters: 
           - NodeCount
           - InstanceType
@@ -23,29 +23,29 @@ Metadata:
           - ImageId
     ParameterLabels:
       GraphDatabaseVersion: 
-        default: Graph Database Version
+        default: Graph Database version
       GraphDataScienceVersion: 
-        default: Graph Data Science Version
+        default: Graph Data Science version
       BloomVersion:
-        default: Bloom Version
+        default: Bloom version
       Password: 
         default: Password
       LicenseKey: 
-        default: License Key
+        default: License key
       NodeCount: 
-        default: Node Count
+        default: Node count
       InstanceType: 
-        default: Instance Type
+        default: Instance type
       DiskSize: 
-        default: Disk Size
+        default: Disk size
       KeyName: 
-        default: Key Name
+        default: Key-pair name
       ImageId: 
         default: AMI ID
 
 Parameters:
   GraphDatabaseVersion:
-    Description: Neo4j Graph Database Version
+    Description: Version of the Neo4j Graph Database software.
     Type: String
     Default: '4.4.3'
     AllowedValues:
@@ -54,7 +54,7 @@ Parameters:
       - '4.2.14'
 
   GraphDataScienceVersion:
-    Description: Neo4j Graph Data Science Version
+    Description: Version of the Neo4j Graph Data Science software.
     Type: String
     Default: 'None'
     AllowedValues:
@@ -62,7 +62,7 @@ Parameters:
       - '1.8.0'
 
   BloomVersion:
-    Description: Neo4j Bloom Version
+    Description: Version of the Neo4j Bloom software.
     Type: String
     Default: 'None'
     AllowedValues:
@@ -70,18 +70,18 @@ Parameters:
       - '2.0.0'
 
   Password:
-    Description: Password for Neo4j
+    Description: Password for Neo4j.
     Type: String
     MinLength: 6
     NoEcho: true
 
   LicenseKey:
-    Description: Optional License Key for Graph Data Science and/or Bloom
+    Description: (Optional) License key for Graph Data Science, Bloom, or both.
     Type: String
     Default: ""
 
   NodeCount:
-    Description: Number of core nodes
+    Description: Number of core nodes.
     Type: Number
     Default: 3
     AllowedValues:
@@ -89,7 +89,7 @@ Parameters:
       - 3
 
   InstanceType:
-    Description: EC2 instance type
+    Description: Type of EC2 instance.
     Type: String
     Default: t3.medium
     AllowedValues:
@@ -107,16 +107,16 @@ Parameters:
       - r6i.32xlarge
 
   DiskSize:
-    Description: Size in GB of the EBS volume on each node
+    Description: Size (in GB) of the EBS volume on each node.
     Type: Number
     Default: 100
 
   KeyName:
-    Description: Name of an existing EC2 KeyPair
+    Description: Name of an existing EC2 key pair.
     Type: AWS::EC2::KeyPair::KeyName
 
   ImageId:
-    Description: AMI ID for each node
+    Description: AMI ID for each node.
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
 
@@ -366,7 +366,7 @@ Resources:
 Outputs:
   Neo4jURL:
     Description: URL for Neo4j
-    Value: 'You can login to Neo4j on port 7474 (http) or 7473 (https) of any node in the autoscaling group.'
+    Value: 'You can log in to Neo4j on port 7474 (http) or 7473 (https) of any node in the Auto Scaling group.'
   Neo4jUsername:
-    Description: Username for Neo4j
-    Value: 'The username is neo4j.  The password is what you provided to the template.'
+    Description: User name for Neo4j
+    Value: 'The user name is neo4j. The password is what you provided in the template.'
