@@ -8,7 +8,7 @@ Test the deployment as follows:
 +
 [#neo4j-login]
 .Neo4j login page
-image::../docs/deployment_guide/images/neo4j_main.png[neo4j-login]
+image::../docs/deployment_guide/images/neo4j_login.png[neo4j-login]
 
 . Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment. The main page appears, as shown in <<#neo4j-main-page>>.
 +
