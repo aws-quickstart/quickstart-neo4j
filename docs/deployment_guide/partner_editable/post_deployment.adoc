@@ -2,33 +2,17 @@
 
 Test the deployment as follows:
 
-. Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and connect to any of the three deployed EC2 instances.
+. This quickstart deploys three EC2 nodes. You can connect to any of the nodes made available from the https://console.aws.amazon.com/ec2/[Amazon EC2 console]. If a node goes down you can connect to a different node and use the web interface on that node.
 
-. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of with either the public IP address or DNS name of your EC2 instance. The login page appears, as shown in <<#neo4j-login>>.
-+
-[#neo4j-login]
-.Neo4j login page
-image::../docs/deployment_guide/images/neo4j_login.png[neo4j-login]
+. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of with either the public IP address or DNS name of your EC2 instance.
 
-. Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment. The main page appears, as shown in <<#neo4j-main-page>>.
-+
-[#neo4j-main-page]
-.Neo4j application main page
-image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
+. Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment.
 
 . Run `CALL dbms.cluster.overview()` to check the status of the DBMS cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
 +
 [#dbms-cluster-overview]
 .DBMS cluster overview
 image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
-
-. (Optional) Print the library version. 
-.. Open Neo4j Browser.
-.. Run `RETURN gds.version()`, as shown in <<return-gds-version>>.
-+
-[#return-gds-version]
-.GDS version
-image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
 
 == Resources
 
