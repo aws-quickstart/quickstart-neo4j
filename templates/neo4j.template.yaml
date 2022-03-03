@@ -76,7 +76,7 @@ Parameters:
     NoEcho: true
 
   LicenseKey:
-    Description: (Optional) License key for Graph Data Science, Bloom, or both.
+    Description: (Optional) License key for Neo4j Graph Data Science, Bloom, or both.
     Type: String
     Default: ""
 
