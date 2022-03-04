@@ -332,7 +332,7 @@ Resources:
   Neo4jInternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable Neo4j Internal Ports
+      GroupDescription: Enable Neo4j Internal Ports.
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: 5000
