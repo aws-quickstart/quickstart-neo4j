@@ -4,7 +4,7 @@ Test the deployment as follows:
 
 . Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and verify that you can connect to the three EC2 instances deployed by this Quick Start. (If a node goes down, you can connect to a different node and use the web interface on that node.)
 
-. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of either the public IP address or DNS name of your EC2 instance.
+. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing `<your server>` with the name of either the public IP address or DNS name of your EC2 instance.
 
 . Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment.
 
