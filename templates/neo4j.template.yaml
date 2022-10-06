@@ -744,7 +744,7 @@ Resources:
       cfn-lint:
         config:
           ignore_checks:
-            - EIAMPolicyWildcardResource
+            - EIAMPolicyWildCardResource
           ignore_reaons:
             - EIAMPolicyWildCardResource: "DescribeStackResources needs *"
     Properties:
