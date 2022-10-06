@@ -740,6 +740,13 @@ Resources:
         - Ref: Neo4jRole
   Neo4jRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyWildcardResource
+          ignore_reaons:
+            - EIAMPolicyWildCardResource: "DescribeStackResources needs *"
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -758,15 +765,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - autoscaling:DescribeAutoScalingInstances
-                  - cloudformation:DescribeStackDriftDetectionStatus
-                  - cloudformation:DescribeStackEvents
-                  - cloudformation:DescribeStackInstance
-                  - cloudformation:DescribeStackResource
-                  - cloudformation:DescribeStackResourceDrifts
-                  - cloudformation:DescribeStackResources
-                  - cloudformation:DescribeStacks
-                  - cloudformation:DescribeStackSet
-                  - cloudformation:DescribeStackSetOperation
+                  - cloudformation:DescribeStack*
                   - ec2:DescribeInstances
                 Resource:
                   - "*"
