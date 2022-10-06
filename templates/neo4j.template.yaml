@@ -758,7 +758,15 @@ Resources:
               - Effect: Allow
                 Action:
                   - autoscaling:DescribeAutoScalingInstances
-                  - cloudformation:DescribeStack*
+                  - cloudformation:DescribeStackDriftDetectionStatus
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:DescribeStackInstance
+                  - cloudformation:DescribeStackResource
+                  - cloudformation:DescribeStackResourceDrifts
+                  - cloudformation:DescribeStackResources
+                  - cloudformation:DescribeStacks
+                  - cloudformation:DescribeStackSet
+                  - cloudformation:DescribeStackSetOperation
                   - ec2:DescribeInstances
                 Resource: "*"
 
