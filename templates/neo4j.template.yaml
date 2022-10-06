@@ -745,8 +745,6 @@ Resources:
         config:
           ignore_checks:
             - EIAMPolicyWildcardResource
-          ignore_reaons:
-            - EIAMPolicyWildcardResource: "DescribeStackResources needs *"
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
