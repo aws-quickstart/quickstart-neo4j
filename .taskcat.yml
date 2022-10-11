@@ -4,9 +4,12 @@ tests:
   default:
     template: ./templates/neo4j.template.yaml
     parameters:
-      AvailabilityZones: $[taskcat_genaz_3]
-      QSS3BucketName: $[taskcat_autobucket]
-      QSS3BucketRegion: $[taskcat_current_region]
-      QSS3KeyPrefix: quickstart-neo4j/
+      Password: "foo123"
+      GraphDatabaseVersion: "4.4.11"
+      NumberOfServers: "3"
+      SSHCIDR: "0.0.0.0/0"
+      InstallGraphDataScience: "False"
+      InstallBloom: "False"
+    stack_name: "tcat-quickstart-neo4j"
     regions:
-    - us-east-2
+    - us-east-1
