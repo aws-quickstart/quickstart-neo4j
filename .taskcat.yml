@@ -5,11 +5,11 @@ tests:
     template: ./templates/neo4j.template.yaml
     parameters:
       Password: "foo123"
-      GraphDatabaseVersion: "4.4.11"
+      GraphDatabaseVersion: "5.1.0"
       NumberOfServers: "3"
       SSHCIDR: "0.0.0.0/0"
       InstallGraphDataScience: "False"
       InstallBloom: "False"
-    stack_name: "tcat-quickstart-neo4j"
+    stack_name: "tcat"
     regions:
-    - us-east-1
+      - us-east-1
