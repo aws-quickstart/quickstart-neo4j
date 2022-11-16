@@ -4,7 +4,7 @@ Test the deployment as follows:
 
 . Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and connect to any of the three deployed EC2 instances.
 
-. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of with either the public IP address or DNS name of your EC2 instance. The login page appears, as shown in <<#neo4j-login>>.
+. In a web browser, go to `\http://<load_balancer_name>:7474` replacing <load_balancer_name> with the name of with either the public (DNS) name of the network load balancer. The  {partner-product-name} login page appears, as shown in <<#neo4j-login>>.
 +
 [#neo4j-login]
 .Neo4j login page

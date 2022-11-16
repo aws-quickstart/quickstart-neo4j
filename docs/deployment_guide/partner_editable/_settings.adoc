@@ -5,7 +5,7 @@
 :partner-company-name: Neo4j
 :doc-month: February
 :doc-year: 2022
-:partner-contributors: Ben Lackey, {partner-company-name}
+:partner-contributors: Ed Randall, Harshit Singhvi, Ben Lackey, {partner-company-name}
 :aws-contributors: Antony Prasad, AWS Data & Analytics Partner team
 :aws-ia-contributors: Suresh Veeragoni, AWS Integration & Automation team 
 :deployment_time: 5 minutes
