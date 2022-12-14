@@ -2,41 +2,39 @@
 
 Test the deployment as follows:
 
-. Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and connect to any of the three deployed EC2 instances.
 
-. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing <your server> with the name of with either the public IP address or DNS name of your EC2 instance. The login page appears, as shown in <<#neo4j-login>>.
+[#neo4j-load-balancer]
+. When the CloudFormation template has completed the deployment, refer to the 'Outputs' tab in the AWS CloudFormation console to obtain the URL of your Network Load Balancer and click on the link shown.  The  {partner-product-name} login page appears, as shown in <<#nlb-address>>.
++
+.NLB Address
+image::../images/nlb-address.png[nlb-address]
+
+
+. Log in to the Neo4j application with the user name 'neo4j' and the password that you supplied during the deployment. 
 +
 [#neo4j-login]
 .Neo4j login page
-image::../docs/deployment_guide/images/neo4j_main.png[neo4j-login]
+image::../images/neo4j_login.png[neo4j-login]
 
-. Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment. The main page appears, as shown in <<#neo4j-main-page>>.
+
+. Once you have sucessfully logged in, you will see the Neo4j main page, as shown in, as shown in <<#neo4j-main-page>>.
+
 +
 [#neo4j-main-page]
 .Neo4j application main page
-image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
+image::../images/neo4j_main.png[neo4j-main-page]
 
-. Run `CALL dbms.cluster.overview()` to check the status of the DBMS cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
+. Run the command ':sysinfo' to check the status of the Neo4j cluster. Information appears about each member of the cluster, as shown in <sysinfo-output>>.
 +
-[#dbms-cluster-overview]
-.DBMS cluster overview
-image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
-
-. (Optional) Print the library version. 
-.. Open Neo4j Browser.
-.. Run `RETURN gds.version()`, as shown in <<return-gds-version>>.
-+
-[#return-gds-version]
-.GDS version
-image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version]
+[#sysinfo-output]
+.Sysinfo Output
+image::../images/sysinfo-output.png[sysinfo output]
 
 == Resources
 
-* https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^] (blog post)
-
 * https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^], especially the following sections:
 
-** https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Ports^]
+** https://neo4j.com/docs/operations-manual/5/configuration/ports/[Ports^]
 
 ** https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
 
@@ -45,5 +43,3 @@ image::../docs/deployment_guide/images/return_gds_version.png[Return GDS version
 ** https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
 
 ** https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
-
-** https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices^]

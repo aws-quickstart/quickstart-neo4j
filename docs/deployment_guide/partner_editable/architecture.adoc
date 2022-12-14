@@ -3,18 +3,26 @@
 WARNING: This Quick Start does not support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^].
 
 Deploying this Quick Start with default parameters builds the following {partner-product-short-name} environment in the
-AWS Cloud.
+AWS Cloud. 
 
 [#architecture1]
 .Quick Start architecture for {partner-product-short-name} on AWS
-image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architecture]
+image::../images/neo4j_aws_3_node_marketplace.png[Architecture]
 
-As shown in <<architecture1>>, the Quick Start sets up the following:
+As shown in <<architecture1>>, the Quick Start deploys the following cloud resources:
 
-* A highly available architecture that spans three Availability Zones  in your default virtual private cloud (VPC).
-* In the public subnets:*
-** Managed network address translation (NAT) gateways in all three Availability Zones to allow outbound internet access for resources in the private subnets.
-** Amazon Elastic Compute Cloud (Amazon EC2) Linux instances in all three Availability Zones with {partner-product-short-name} installed and configured in an Auto Scaling group for external access. Within this database management system (DBMS) cluster, each instance has either a leader or a follower https://medium.com/neo4j/querying-neo4j-clusters-7d6fde75b5b4[cluster role^].
-** Amazon Elastic Block Storage (Amazon EBS) gp3 volumes in all three Availability Zones to store the Neo4j database.
+* A highly available architecture that spans three Availability Zones in a new virtual private cloud (VPC).
+* An Internet Gateway
+* Three public subnets (distributed accross the 3 AZs), with the following address ranges:
+** 10.0.1.0/24
+** 10.0.2.0/24
+** 10.0.3.0/24
+* Security Groups 
+* The required Routing Tables and Subnet Associations
+* 1, or between 3 and 10 EC2 instances (depending on whether a single instance, or an autonomous cluster is selected)
+* 1 Network (Layer 4) Load Balancer
+* An EC2 Auto Scailing Group (ASG) and associated launch configuration
 
-[.small]#* By default, to give users a better experience when getting started with {partner-product-short-name}, this Quick Start deploys in a public subnet. If you're deploying this Quick Start in a production environment, consider using a private subnet. A private subnet limits how you access the Neo4j application and Neo4j Browser over the public internet. For more information, refer to https://docs.aws.amazon.com/vpc/latest/userguide/vpn-connections.html[Connect your VPC to remote networks^].#
+Amazon Elastic Compute Cloud (Amazon EC2) Linux instances are deployed evenly across each of the 3 subnets (by the ASG) and are configured as {partner-product-short-name} instances, in a Autonomous Cluster configuration.  
+
+[.small]#* By default, to give users a better experience when getting started with {partner-product-short-name}, this Quick Start deploys in a public subnet. If you're deploying this Quick Start in a production environment, consider using a private subnet. A private subnet limits how you access the Neo4j application and Neo4j Browser over the public internet. For more information, refer to https://docs.aws.amazon.com/vpc/latest/userguide/extend-intro.htmll[Connect your VPC to remote networks^].#
