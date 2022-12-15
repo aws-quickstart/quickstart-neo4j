@@ -12,7 +12,7 @@ image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architectu
 As shown in <<architecture1>>, the Partner Solution sets up the following:
 
 * A highly available architecture that spans three Availability Zones.
-* A VPC configured with public subnets, according to AWS best practices, to provide you with your own virtual network on AWS.*
+* A virtual private cloud (VPC) configured with public subnets, according to AWS best practices, to provide you with your own virtual network on AWS.*
 * An internet gateway to allow the VPC to connect to the internet.
 * A Network Load Balancer to distribute incoming traffic to the Amazon Elastic Compute Cloud (Amazon EC2) instances in the public subnets.
 * In the public subnets, Neo4j deployed to EC2 instances in an Auto Scaling group. You have the option to deploy a single instance or an autonomous cluster of 3–10 instances (three shown).
