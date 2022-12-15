@@ -1,20 +1,27 @@
 == Postdeployment steps
 
-Test the deployment as follows:
+To test the deployment, complete the following steps.
 
 
 [#neo4j-load-balancer]
-. When the CloudFormation template has completed the deployment, refer to the 'Outputs' tab in the AWS CloudFormation console to obtain the URL of your Network Load Balancer and click on the link shown.  The  {partner-product-name} login page appears, as shown in <<#nlb-address>>.
+. Sign in to the AWS Management
+Console and open the Amazon CloudFormation console at https://console.aws.amazon.com/cloudformation.
+. On the *Stacks* page, choose the {partner-product-short-name} Partner Solution stack.
+. Choose the *Outputs* tab.
+. Choose the URL of the Network Load Balancer.
+. On the {partner-product-name} login page, enter the user name and password you entered for the ... and ... parameters during deployment.
+
+the CloudFormation template has completed the deployment, refer to the 'Outputs' tab in the AWS CloudFormation console to obtain the URL of your Network Load Balancer and click on the link shown.  The  {partner-product-name} login page appears, as shown in <<#nlb-address>>.
 +
 .NLB Address
-image::../images/nlb-address.png[nlb-address]
+image::../docs/deployment_guide/images/nlb-address.png[nlb-address]
 
 
-. Log in to the Neo4j application with the user name 'neo4j' and the password that you supplied during the deployment. 
+. Log in to the Neo4j application with the user name 'neo4j' and the password that you supplied during the deployment.
 +
 [#neo4j-login]
 .Neo4j login page
-image::../images/neo4j_login.png[neo4j-login]
+image::../docs/deployment_guide/images/neo4j_login.png[neo4j-login]
 
 
 . Once you have sucessfully logged in, you will see the Neo4j main page, as shown in, as shown in <<#neo4j-main-page>>.
@@ -22,13 +29,13 @@ image::../images/neo4j_login.png[neo4j-login]
 +
 [#neo4j-main-page]
 .Neo4j application main page
-image::../images/neo4j_main.png[neo4j-main-page]
+image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
 
 . Run the command ':sysinfo' to check the status of the Neo4j cluster. Information appears about each member of the cluster, as shown in <sysinfo-output>>.
 +
 [#sysinfo-output]
 .Sysinfo Output
-image::../images/sysinfo-output.png[sysinfo output]
+image::../docs/deployment_guide/images/sysinfo-output.png[sysinfo output]
 
 == Resources
 
