@@ -2,7 +2,6 @@
 
 To test the deployment, complete the following steps.
 
-
 [#neo4j-load-balancer]
 . Sign in to the AWS Management
 Console and open the Amazon CloudFormation console at https://console.aws.amazon.com/cloudformation.
@@ -39,14 +38,14 @@ image::../docs/deployment_guide/images/sysinfo-output.png[sysinfo output]
 
 == Resources
 
-* https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^], especially the following sections:
+For more information about Neo4j, refer to the following sections of the https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^]:
 
-** https://neo4j.com/docs/operations-manual/5/configuration/ports/[Ports^]
+* https://neo4j.com/docs/operations-manual/5/configuration/ports/[Ports^]
 
-** https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
+* https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
 
-** https://neo4j.com/docs/operations-manual/current/security/[Security^]
+* https://neo4j.com/docs/operations-manual/current/security/[Security^]
 
-** https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
+* https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
 
 ** https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
