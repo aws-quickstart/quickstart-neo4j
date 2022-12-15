@@ -2,4 +2,4 @@
 
 This Quick Start requires a license for {partner-product-short-name}. To use the Quick Start in your production environment, sign up for a license at https://neo4j.com/licensing/[Neo4j Licensing^]. For information about the trial license, refer to the https://neo4j.com/terms/enterprise_us[Neo4j Evaluation Agreement for Neo4j Software^].
 
-There is no cost to use this Quick Start, but you will be billed for the resources deployed. For more information, refer to the https://fwd.aws/rA69w?[AWS Quick Start General Information Guide^].
+There is no cost to use this Quick Start, but you will be billed for the resources deployed. For more information, refer to the https://aws-ia.github.io/content/qs_info.html[AWS Quick Start General Content Guide^].
