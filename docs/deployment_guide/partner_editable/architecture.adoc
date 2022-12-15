@@ -6,7 +6,7 @@ Deploying this Partner Solution with default parameters builds the following {pa
 AWS Cloud.
 
 [#architecture1]
-.Partner Solution architecture for {partner-product-short-name} on the AWS Cloud
+.Partner Solution architecture for {partner-product-short-name} on AWS
 image::../docs/deployment_guide/images/neo4j_architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Partner Solution sets up the following:

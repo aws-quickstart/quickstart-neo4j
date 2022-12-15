@@ -7,34 +7,19 @@ To test the deployment, complete the following steps.
 Console and open the Amazon CloudFormation console at https://console.aws.amazon.com/cloudformation.
 . On the *Stacks* page, choose the {partner-product-short-name} Partner Solution stack.
 . Choose the *Outputs* tab.
-. Choose the URL of the Network Load Balancer.
-. On the {partner-product-name} login page, enter the user name and password you entered for the ... and ... parameters during deployment.
-
-the CloudFormation template has completed the deployment, refer to the 'Outputs' tab in the AWS CloudFormation console to obtain the URL of your Network Load Balancer and click on the link shown.  The  {partner-product-name} login page appears, as shown in <<#nlb-address>>.
-+
-.NLB Address
-image::../docs/deployment_guide/images/nlb-address.png[nlb-address]
-
-
-. Log in to the Neo4j application with the user name 'neo4j' and the password that you supplied during the deployment.
-+
-[#neo4j-login]
-.Neo4j login page
-image::../docs/deployment_guide/images/neo4j_login.png[neo4j-login]
-
-
-. Once you have sucessfully logged in, you will see the Neo4j main page, as shown in, as shown in <<#neo4j-main-page>>.
+. Choose the URL in the *Value* column for `Neo4jBrowserURL`.
+. Sign in to {partner-product-name} with the user name `neo4j` and password you entered for the `Password for Neo4j` parameter during deployment. The Neo4j Enterprise Edition main page should appear, as shown in <<#neo4j-main-page>>.
 
 +
 [#neo4j-main-page]
-.Neo4j application main page
+.Neo4j Enterprise Edition main page
 image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
 
-. Run the command ':sysinfo' to check the status of the Neo4j cluster. Information appears about each member of the cluster, as shown in <sysinfo-output>>.
+. Using the Neo4j browser, run the command `:sysinfo` to check the status of the Neo4j cluster. Information appears about each member of the cluster, as shown in <<sysinfo-output>>.
 +
 [#sysinfo-output]
-.Sysinfo Output
-image::../docs/deployment_guide/images/sysinfo-output.png[sysinfo output]
+.Sysinfo output
+image::../docs/deployment_guide/images/sysinfo-output.png[sysinfo- output]
 
 == Resources
 
@@ -48,4 +33,4 @@ For more information about Neo4j, refer to the following sections of the https:/
 
 * https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
 
-** https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
+* https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
