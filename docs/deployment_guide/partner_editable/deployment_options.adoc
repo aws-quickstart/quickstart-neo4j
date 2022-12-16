@@ -1,5 +1,5 @@
-This Quick Start provides one deployment option:
+This Partner Solution provides the following deployment option to provision {partner-product-short-name} into your default VPC:
 
-* https://fwd.aws/yrMqD?[Deploy {partner-product-short-name} into your default VPC^]. This option provisions {partner-product-name} in your existing AWS infrastructure.
+https://fwd.aws/yrMqD?[Deploy {partner-product-short-name} into your default VPC^].
 
-The Quick Start provides one template, in which you can configure various parameters.
+The deployment uses one template that contains configuration parameters that you can customize.

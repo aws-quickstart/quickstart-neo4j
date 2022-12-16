@@ -1,33 +1,36 @@
 == Postdeployment steps
 
-Test the deployment as follows:
+To test the deployment, complete the following steps.
 
-. Open the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], and verify that you can connect to the three EC2 instances deployed by this Quick Start. (If a node goes down, you can connect to a different node and use the web interface on that node.)
+[#neo4j-load-balancer]
+. Sign in to the AWS Management
+Console and open the Amazon CloudFormation console at https://console.aws.amazon.com/cloudformation.
+. On the *Stacks* page, choose the {partner-product-short-name} Partner Solution stack.
+. Choose the *Outputs* tab.
+. Choose the URL in the *Value* column for `Neo4jBrowserURL`.
+. Sign in to {partner-product-name} with the user name `neo4j` and password you entered for the `Password for Neo4j` parameter during deployment. The Neo4j Enterprise Edition main page should appear, as shown in <<#neo4j-main-page>>.
 
-. In a web browser, go to `\http://<your server>:7474` OR `\https://<your server>:7473`, replacing `<your server>` with the name of either the public IP address or DNS name of your EC2 instance.
-
-. Log in to the Neo4j application with the user name `neo4j` and the password that you supplied during the deployment.
-
-. Run `CALL dbms.cluster.overview()` to check the status of the DBMS cluster. Information appears about each member of the cluster, as shown in <<dbms-cluster-overview>>.
 +
-[#dbms-cluster-overview]
-.DBMS cluster overview
-image::../docs/deployment_guide/images/dbms_cluster_overview.png[DBMS cluster overview]
+[#neo4j-main-page]
+.Neo4j Enterprise Edition main page
+image::../docs/deployment_guide/images/neo4j_main.png[neo4j-main-page]
+
+. Using the Neo4j browser, run the command `:sysinfo` to check the status of the Neo4j cluster. Information appears about each member of the cluster, as shown in <<sysinfo-output>>.
++
+[#sysinfo-output]
+.Sysinfo output
+image::../docs/deployment_guide/images/sysinfo-output.png[sysinfo- output]
 
 == Resources
 
-* https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[8 Solid Tips for Succeeding with Neo4j^]
+For more information about Neo4j, refer to the following sections of the https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^]:
 
-* https://neo4j.com/docs/operations-manual/current/[Neo4j Operations Manual^], especially the following sections:
+* https://neo4j.com/docs/operations-manual/5/configuration/ports/[Ports^]
 
-** https://neo4j.com/docs/operations-manual/4.4/configuration/ports/[Ports^]
+* https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
 
-** https://neo4j.com/docs/operations-manual/current/backup-restore/planning/[Backup and restore planning^]
+* https://neo4j.com/docs/operations-manual/current/security/[Security^]
 
-** https://neo4j.com/docs/operations-manual/current/security/[Security^]
+* https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
 
-** https://neo4j.com/docs/operations-manual/current/monitoring/[Monitoring^]
-
-** https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
-
-** https://neo4j.com/blog/8-tips-succeeding-with-neo4j/[General best practices^]
+* https://neo4j.com/docs/operations-manual/current/performance/[Performance^]
