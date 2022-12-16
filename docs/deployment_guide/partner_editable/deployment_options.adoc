@@ -2,4 +2,4 @@ This Partner Solution provides the following deployment option to provision {par
 
 https://fwd.aws/yrMqD?[Deploy {partner-product-short-name} into your default VPC^].
 
-The deployment uses one template that contains various parameters that you can configure.
+The deployment uses one template that contains configuration parameters that you can customize.
