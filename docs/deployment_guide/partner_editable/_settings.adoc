@@ -7,7 +7,7 @@
 :doc-year: 2022
 :partner-contributors: Ed Randall, Harshit Singhvi, Oliver Hughes, Bledi Feshti, Ben Lackey, {partner-company-name}
 :aws-contributors: Antony Prasad, AWS Data & Analytics Partner team
-:aws-ia-contributors: Battulga Purevragchaa, Suresh Veeragoni, AWS Integration & Automation team
+:aws-ia-contributors: Battulga Purevragchaa, Suresh Veeragoni, AWS Workload Migration Program
 :deployment_time: 5 minutes
 :default_deployment_region: us-east-1
 // :private_repo:
