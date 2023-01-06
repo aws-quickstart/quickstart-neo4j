@@ -8,7 +8,6 @@ tests:
       QSS3BucketName: $[taskcat_autobucket]
       QSS3BucketRegion: $[taskcat_current_region]
       QSS3KeyPrefix: quickstart-neo4j/
-      GraphDatabaseVersion: "5.1.0"
       NumberOfServers: "3"
       SSHCIDR: "0.0.0.0/0"
       InstallGraphDataScience: "False"
