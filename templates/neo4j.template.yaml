@@ -8,7 +8,6 @@ Metadata:
       - Label:
           default: "Neo4j Configuration"
         Parameters:
-          - GraphDatabaseVersion
           - InstallGraphDataScience
           - GraphDataScienceLicenseKey
           - InstallBloom
@@ -22,8 +21,6 @@ Metadata:
           - DiskSize
           - SSHCIDR
     ParameterLabels:
-      GraphDatabaseVersion:
-        default: Graph Database Version
       InstallGraphDataScience:
         default: Install Graph Data Science
       GraphDataScienceLicenseKey:
@@ -44,11 +41,6 @@ Metadata:
         default: SSH CIDR
 
 Parameters:
-  GraphDatabaseVersion:
-    Description: Neo4j Graph Database Version
-    Type: String
-    Default: '5.1.0'
-
   InstallGraphDataScience:
     Description: Install Graph Data Science
     Type: String
@@ -395,10 +387,6 @@ Resources:
             - "set -euo pipefail\n"
             - "echo Running startup script...\n"
 
-            - "graphDatabaseVersion="
-            - Ref: GraphDatabaseVersion
-            - "\n"
-
             - "installGraphDataScience="
             - Ref: InstallGraphDataScience
             - "\n"
@@ -438,9 +426,29 @@ Resources:
             - "install_neo4j_from_yum() {\n"
             - "  echo \"Installing Graph Database...\"\n"
             - "  export NEO4J_ACCEPT_LICENSE_AGREEMENT=yes\n"
-            - "  yum -y install \"neo4j-enterprise-${graphDatabaseVersion}\"\n"
+            - "  ASG_NAME=$(aws --region $region cloudformation describe-stack-resources --stack-name $stackName --query 'StackResources[?ResourceType==`AWS::AutoScaling::AutoScalingGroup` && LogicalResourceId==`Neo4jAutoScalingGroup`].PhysicalResourceId' --output text)\n"
+            - "  NEO4J_VERSION_ASG_TAG=$(aws --region $region autoscaling describe-auto-scaling-groups --auto-scaling-group-names $ASG_NAME --query 'AutoScalingGroups[0].Tags[?Key==`NEO4J_VERSION`].Value' --output text)\n"
+            - "  if [[ ! -z $NEO4J_VERSION_ASG_TAG ]]; then\n"
+            - "    echo \"Found NEO4J_VERSION_ASG_TAG Tag on AutoScalingGroup $ASG_NAME: NEO4J_VERSION_ASG_TAG=$NEO4J_VERSION_ASG_TAG\"\n"
+            - "    PACKAGE_VERSION=$NEO4J_VERSION_ASG_TAG\n"
+            - "    local -r NEO4J_YUM_PACKAGE=\"neo4j-enterprise-$PACKAGE_VERSION\"\n"
+            - "  else\n"
+            - "    PACKAGE_VERSION=$(curl --fail http://versions.neo4j-templates.com/target.json | jq -r '.aws.\"5\"' || echo \"\")\n"
+            - "    if [[ ! -z $PACKAGE_VERSION && $PACKAGE_VERSION != \"null\" ]]; then\n"
+            - "      echo \"Found PACKAGE_VERSION from http://versions.neo4j-templates.com : PACKAGE_VERSION=$PACKAGE_VERSION\"\n"
+            - "      local -r NEO4J_YUM_PACKAGE=\"neo4j-enterprise-$PACKAGE_VERSION\"\n"
+            - "    else\n"
+            - "      echo 'Failed to resolve Neo4j version from http://versions.neo4j-templates.com, using PACKAGE_VERSION=latest'\n"
+            - "      PACKAGE_VERSION=\"latest\"\n"
+            - "      local -r NEO4J_YUM_PACKAGE='neo4j-enterprise'\n"
+            - "    fi\n"
+            - "  fi\n"
+            - "  yum -y install \"${NEO4J_YUM_PACKAGE}\"\n"
             - "  yum update -y aws-cfn-bootstrap\n"
             - "  systemctl enable neo4j\n"
+            - "  if [[ \"$PACKAGE_VERSION\" == \"latest\" ]]; then\n"
+            - "    PACKAGE_VERSION=$(/usr/share/neo4j/bin/neo4j --version)\n"
+            - "  fi\n"
             - "}\n"
 
             - "install_apoc_plugin() {\n"
@@ -534,6 +542,16 @@ Resources:
             - "  /opt/aws/bin/cfn-signal -e $? --stack \"${stackName}\" --resource Neo4jAutoScalingGroup --region \"${region}\"\n"
             - "}\n"
 
+            - "tag_asg_with_neo4j_version() {\n"
+            - "  if [[ -z $NEO4J_VERSION_ASG_TAG ]]; then\n"
+            - "    echo \"Tagging AutoScalingGroup $ASG_NAME with Key NEO4J_VERSION and Value $PACKAGE_VERSION\"\n"
+            - "    aws --region $region autoscaling create-or-update-tags --tags ResourceId=$ASG_NAME,ResourceType=auto-scaling-group,Key=NEO4J_VERSION,Value=$PACKAGE_VERSION,PropagateAtLaunch=true\n"
+            - "  else\n"
+            - "    echo \"ASG is already tagged with NEO4J_VERSION\"\n"
+            - "  fi\n"
+            - "  /opt/aws/bin/cfn-signal -e $? --stack \"${stackName}\" --resource Neo4jAutoScalingGroup --region \"${region}\"\n"
+            - "}\n"
+
             - "install_neo4j_from_yum\n"
             - "install_apoc_plugin\n"
             - "extension_config\n"
@@ -541,6 +559,7 @@ Resources:
             - "configure_graph_data_science\n"
             - "configure_bloom\n"
             - "start_neo4j\n"
+            - "tag_asg_with_neo4j_version\n"
 
 
   Neo4jInstanceProfile:
@@ -572,7 +591,9 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
+                  - autoscaling:CreateOrUpdateTags
                   - autoscaling:DescribeAutoScalingInstances
+                  - autoscaling:DescribeAutoScalingGroups
                   - cloudformation:DescribeStackDriftDetectionStatus
                   - cloudformation:DescribeStackEvents
                   - cloudformation:DescribeStackInstance
@@ -668,50 +689,50 @@ Outputs:
 Mappings:
   Neo4j:
     us-east-1:
-      BYOL: ami-0a083b4815d79912a
+      BYOL: ami-0e400af847eb9a531
     us-east-2:
-      BYOL: ami-0efdfe5f973295d5f
+      BYOL: ami-0107e71b1207b90c1
     us-west-1:
-      BYOL: ami-005768a0a5af80eff
+      BYOL: ami-01a47d8951b35c272
     us-west-2:
-      BYOL: ami-0ec5722e51779df63
+      BYOL: ami-074caf8265c21fd4d
     ca-central-1:
-      BYOL: ami-082add416dcbfac94
+      BYOL: ami-07887e0c7c8cd3151
     eu-central-1:
-      BYOL: ami-0f712b5360ed11f9a
+      BYOL: ami-01321a57a6c5786c4
     eu-west-1:
-      BYOL: ami-0a7ee696c3485c81a
+      BYOL: ami-0f91decef80d7d93b
     eu-west-2:
-      BYOL: ami-0059b99ca6e57180b
+      BYOL: ami-0a7d3edbd43b7eb80
     eu-west-3:
-      BYOL: ami-03cc598cf6121426c
+      BYOL: ami-084419b01954a6223
     eu-north-1:
-      BYOL: ami-001b84e65a0f99ebe
+      BYOL: ami-05fed050da0ade42e
     eu-south-1:
-      BYOL: ami-0debf824944ae156d
+      BYOL: ami-02c3742c42b59e7ef
     ap-southeast-1:
-      BYOL: ami-0b1217c9f4fb9cb5c
+      BYOL: ami-09a4e375812f71b6a
     ap-southeast-2:
-      BYOL: ami-05e1acccd61acf5fe
+      BYOL: ami-0a95c0a2258c32e85
     ap-southeast-3:
-      BYOL: ami-043df32930e8ed1e7
+      BYOL: ami-09093311aa2cb29a8
     ap-south-1:
-      BYOL: ami-0b5a5ed2c41122ba0
+      BYOL: ami-0fceddde2778cc2e0
     ap-northeast-1:
-      BYOL: ami-012e1f2a058350981
+      BYOL: ami-0dbecd5269ffad97f
     ap-northeast-2:
-      BYOL: ami-006cce924d5de4dae
+      BYOL: ami-0e78f50ef5b1e902b
     ap-northeast-3:
-      BYOL: ami-098020958e39f3231
+      BYOL: ami-0ff14d64aef37f40d
     ap-east-1:
-      BYOL: ami-0c7dc560cfa1b5bc3
+      BYOL: ami-05f54d0dc0905041d
     sa-east-1:
-      BYOL: ami-02ca81182649f7596
+      BYOL: ami-0a431786eba166f75
     me-south-1:
-      BYOL: ami-01209229feee50825
+      BYOL: ami-0c77db260e85bb422
     af-south-1:
-      BYOL: ami-035cf0ab51e1d8fe4
+      BYOL: ami-041936db2e9c3abc2
     us-gov-east-1:
-      BYOL: ami-0176f369927277b7d
+      BYOL: ami-02ed55fa8cb841061
     us-gov-west-1:
-      BYOL: ami-00c5895fb11d70b5a
+      BYOL: ami-05f0b2155478f8259
